@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{DAD03C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelEasy.Web", "server\HotelEasy.Web\HotelEasy.Web.csproj", "{CECB499E-C513-4AB9-91A3-9A55274508B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelEasy.Entities", "server\HotelEasy.Entities\HotelEasy.Entities.csproj", "{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelEasy.Data", "server\HotelEasy.Data\HotelEasy.Data.csproj", "{5152406C-2907-4899-BE66-CE1467008F60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,11 +33,37 @@ Global
 		{CECB499E-C513-4AB9-91A3-9A55274508B6}.Release|x64.Build.0 = Release|Any CPU
 		{CECB499E-C513-4AB9-91A3-9A55274508B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{CECB499E-C513-4AB9-91A3-9A55274508B6}.Release|x86.Build.0 = Release|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Debug|x64.Build.0 = Debug|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Debug|x86.Build.0 = Debug|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Release|Any CPU.Build.0 = Release|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Release|x64.ActiveCfg = Release|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Release|x64.Build.0 = Release|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Release|x86.ActiveCfg = Release|Any CPU
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872}.Release|x86.Build.0 = Release|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Debug|x64.Build.0 = Debug|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Debug|x86.Build.0 = Debug|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Release|x64.ActiveCfg = Release|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Release|x64.Build.0 = Release|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Release|x86.ActiveCfg = Release|Any CPU
+		{5152406C-2907-4899-BE66-CE1467008F60}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CECB499E-C513-4AB9-91A3-9A55274508B6} = {DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}
+		{498E87D7-AB78-4FDE-9A67-EC1DD2ECB872} = {DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}
+		{5152406C-2907-4899-BE66-CE1467008F60} = {DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}
 	EndGlobalSection
 EndGlobal
