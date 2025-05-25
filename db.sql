@@ -1,0 +1,132 @@
+CREATE DATABASE Diplomna21180105
+COLLATE Cyrillic_General_CI_AI;
+GO
+
+USE Diplomna21180105;
+GO
+
+CREATE SCHEMA [21180105];
+GO
+
+
+CREATE TABLE [21180105].[Users] (
+    UserID INT IDENTITY PRIMARY KEY,
+    Email NVARCHAR(255) COLLATE Cyrillic_General_CI_AI NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(255) COLLATE Cyrillic_General_CI_AI NOT NULL,
+    Role NVARCHAR(50) COLLATE Cyrillic_General_CI_AI NOT NULL,
+    CreatedAt_21180105 DATETIME DEFAULT GETDATE()
+);
+GO
+
+
+CREATE TABLE [21180105].[Hotels] (
+    HotelID INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(100) COLLATE Cyrillic_General_CI_AI NOT NULL,
+    Location NVARCHAR(200) COLLATE Cyrillic_General_CI_AI,
+    CreatedAt_21180105 DATETIME DEFAULT GETDATE()
+);
+GO
+
+
+CREATE TABLE [21180105].[Rooms] (
+    RoomID INT IDENTITY PRIMARY KEY,
+    HotelID INT NOT NULL,
+    RoomNumber NVARCHAR(10) COLLATE Cyrillic_General_CI_AI NOT NULL,
+    Capacity INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    RoomType NVARCHAR(50) COLLATE Cyrillic_General_CI_AI NOT NULL,
+    IsAvailable BIT NOT NULL DEFAULT 1,
+    CreatedAt_21180105 DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Rooms_Hotels FOREIGN KEY (HotelID) REFERENCES [21180105].[Hotels](HotelID)
+);
+GO
+
+
+CREATE TABLE [21180105].[Reservations] (
+    ReservationID INT IDENTITY PRIMARY KEY,
+    UserID INT NOT NULL,
+    RoomID INT NOT NULL,
+    CheckInDate DATE NOT NULL,
+    CheckOutDate DATE NOT NULL,
+    CreatedAt_21180105 DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Reservations_Users FOREIGN KEY (UserID) REFERENCES [21180105].[Users](UserID),
+    CONSTRAINT FK_Reservations_Rooms FOREIGN KEY (RoomID) REFERENCES [21180105].[Rooms](RoomID)
+);
+GO
+
+
+CREATE TABLE [21180105].[log_21180105] (
+    LogID INT IDENTITY PRIMARY KEY,
+    TableName NVARCHAR(100) COLLATE Cyrillic_General_CI_AI,
+    OperationType NVARCHAR(10) COLLATE Cyrillic_General_CI_AI,
+    OperationDateTime DATETIME DEFAULT GETDATE()
+);
+GO
+
+
+CREATE TRIGGER trg_Users_Log
+ON [21180105].[Users]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    UPDATE [21180105].[Users]
+    SET CreatedAt_21180105 = GETDATE()
+    WHERE UserID IN (SELECT UserID FROM inserted);
+
+    INSERT INTO [21180105].[log_21180105](TableName, OperationType)
+    SELECT 'Users', 
+           CASE WHEN EXISTS (SELECT * FROM deleted) THEN 'UPDATE' ELSE 'INSERT' END
+    FROM inserted;
+END;
+GO
+
+
+CREATE TRIGGER trg_Hotels_Log
+ON [21180105].[Hotels]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    UPDATE [21180105].[Hotels]
+    SET CreatedAt_21180105 = GETDATE()
+    WHERE HotelID IN (SELECT HotelID FROM inserted);
+
+    INSERT INTO [21180105].[log_21180105](TableName, OperationType)
+    SELECT 'Hotels',
+           CASE WHEN EXISTS (SELECT * FROM deleted) THEN 'UPDATE' ELSE 'INSERT' END
+    FROM inserted;
+END;
+GO
+
+
+CREATE TRIGGER trg_Rooms_Log
+ON [21180105].[Rooms]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    UPDATE [21180105].[Rooms]
+    SET CreatedAt_21180105 = GETDATE()
+    WHERE RoomID IN (SELECT RoomID FROM inserted);
+
+    INSERT INTO [21180105].[log_21180105](TableName, OperationType)
+    SELECT 'Rooms',
+           CASE WHEN EXISTS (SELECT * FROM deleted) THEN 'UPDATE' ELSE 'INSERT' END
+    FROM inserted;
+END;
+GO
+
+
+CREATE TRIGGER trg_Reservations_Log
+ON [21180105].[Reservations]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    UPDATE [21180105].[Reservations]
+    SET CreatedAt_21180105 = GETDATE()
+    WHERE ReservationID IN (SELECT ReservationID FROM inserted);
+
+    INSERT INTO [21180105].[log_21180105](TableName, OperationType)
+    SELECT 'Reservations',
+           CASE WHEN EXISTS (SELECT * FROM deleted) THEN 'UPDATE' ELSE 'INSERT' END
+    FROM inserted;
+END;
+GO
