@@ -145,10 +145,10 @@ VALUES
 
 INSERT INTO [21180105].[Rooms] (HotelID, RoomNumber, Capacity, Price, RoomType, IsAvailable)
 VALUES
-(1, '101', 2, 120.00, 'Standard', 1),
-(1, '102', 3, 150.00, 'Deluxe', 1),
-(2, '201', 2, 100.00, 'Standard', 1),
-(2, '202', 4, 180.00, 'Family Suite', 1);
+(1, '101', 2, 120.00, 'Стандартна', 1),
+(1, '102', 3, 150.00, 'Луксозна', 1),
+(2, '201', 2, 100.00, 'Стандартна', 1),
+(2, '202', 4, 180.00, 'Семеен апартамент', 1);
 
 INSERT INTO [21180105].[Reservations] (UserID, RoomID, CheckInDate, CheckOutDate)
 VALUES
