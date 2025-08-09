@@ -1,4 +1,4 @@
-CREATE DATABASE Diplomna21180105
+﻿CREATE DATABASE Diplomna21180105
 COLLATE Cyrillic_General_CI_AI;
 GO
 
@@ -132,3 +132,25 @@ BEGIN
     FROM inserted;
 END;
 GO
+
+INSERT INTO [21180105].[Users] (Email, PasswordHash, Role)
+VALUES 
+('owner1@example.com', 'hashedpassword1', 'Owner'),
+('user1@example.com', 'hashedpassword2', 'User');
+
+INSERT INTO [21180105].[Hotels] (OwnerID, Name, Location)
+VALUES
+(1, 'Хотел Рила', 'Боровец, България'),
+(1, 'Морски Бриз', 'Слънчев Бряг, България');
+
+INSERT INTO [21180105].[Rooms] (HotelID, RoomNumber, Capacity, Price, RoomType, IsAvailable)
+VALUES
+(1, '101', 2, 120.00, 'Standard', 1),
+(1, '102', 3, 150.00, 'Deluxe', 1),
+(2, '201', 2, 100.00, 'Standard', 1),
+(2, '202', 4, 180.00, 'Family Suite', 1);
+
+INSERT INTO [21180105].[Reservations] (UserID, RoomID, CheckInDate, CheckOutDate)
+VALUES
+(2, 1, '2025-08-15', '2025-08-18'),
+(2, 3, '2025-09-01', '2025-09-05');
