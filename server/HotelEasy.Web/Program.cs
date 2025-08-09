@@ -1,4 +1,6 @@
 using dotenv.net;
+using Microsoft.EntityFrameworkCore;
+using HotelEasy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,10 @@ builder.Services.AddOpenApi();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
+builder.Services.AddDbContext<Diplomna21180105Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 var app = builder.Build();
 
