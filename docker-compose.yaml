@@ -1,0 +1,49 @@
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_db
+    env_file:
+      - .env
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+    volumes:
+      - sql_data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+    networks:
+      - primary
+
+  backend:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    container_name: api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5276
+    ports:
+      - "5276:5276" 
+    depends_on:
+      - database
+    networks:
+      - primary
+
+  frontend:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - primary
+
+networks:
+  primary:
+    driver: bridge
+
+volumes:
+  sql_data:
