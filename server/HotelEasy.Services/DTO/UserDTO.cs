@@ -36,6 +36,6 @@ namespace HotelEasy.Services.DTO
     {
         public string Email { get; set; } = null!;
         
-        public string PasswordHash { get; set; } = null!;
+        public string Password { get; set; } = null!;
     }
 }
