@@ -37,10 +37,9 @@ namespace HotelEasy.Services
         {
             System.Console.WriteLine("Attempting to login user: " + UserLoginDTO.Email);
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == UserLoginDTO.Email);
-            // if (user == null || !BCrypt.Net.BCrypt.Verify(UserLoginDTO.Password, user.PasswordHash))
-            //     return ServiceResult<string>.Failure("Invalid username or password");
+            if (user == null || !BCrypt.Net.BCrypt.Verify(UserLoginDTO.Password, user.PasswordHash))
+                return ServiceResult<string>.Failure("Invalid username or password");
 
-            // // var token = GenerateJwtToken(user);
             return ServiceResult<string>.SuccessResult(user.Email);
         }
     }
