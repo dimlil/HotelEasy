@@ -27,15 +27,18 @@ public partial class Diplomna21180105Context : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost,1433;Database=Diplomna21180105;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;Encrypt=False;");
-
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Cyrillic_General_CI_AI");
 
         modelBuilder.Entity<Hotel>(entity =>
         {
+            entity.ToTable("Users", "21180105");
             entity.HasKey(e => e.HotelId).HasName("PK__Hotels__46023BBF1438359F");
 
             entity.ToTable("Hotels", "21180105", tb => tb.HasTrigger("trg_Hotels_Log"));
