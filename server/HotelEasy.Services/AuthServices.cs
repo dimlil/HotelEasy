@@ -47,8 +47,9 @@ namespace HotelEasy.Services
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-
-            return ServiceResult<string>.SuccessResult(user.Email);
+            
+            var token = GenerateJwtToken(user);
+            return ServiceResult<string>.SuccessResult(token);
         }
 
         public async Task<ServiceResult<string>> LoginAsync(UserLoginDTO UserLoginDTO)
