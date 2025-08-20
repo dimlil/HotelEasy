@@ -7,11 +7,11 @@ namespace HotelEasy.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class authController : Controller
     {
         private readonly AuthServices _authService;
 
-        public AuthController(AuthServices authService)
+        public authController(AuthServices authService)
         {
             _authService = authService;
         }
