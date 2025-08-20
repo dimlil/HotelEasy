@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelEasy.Data;
+using HotelEasy.Entities;
 using HotelEasy.Services.Common;
 using HotelEasy.Services.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,25 @@ public class HotelsServices
         catch (Exception ex)
         {
             return new ServiceResult<List<HotelDTO>> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
+
+    public async Task<ServiceResult<HotelDTO>> CreateHotelAsync(HotelDTO dto)
+    {
+        try
+        {
+            var hotel = _mapper.Map<Hotel>(dto);
+
+            if (await _context.Users.Where(u => u.UserId == dto.OwnerId).FirstOrDefaultAsync() == null)
+                return ServiceResult<HotelDTO>.Failure("User not found");
+
+            await _context.Hotels.AddAsync(hotel);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<HotelDTO> { Success = true, Data = _mapper.Map<HotelDTO>(hotel) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
 }
