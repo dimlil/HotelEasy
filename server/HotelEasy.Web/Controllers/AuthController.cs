@@ -3,7 +3,7 @@ using HotelEasy.Services;
 using Microsoft.AspNetCore.Identity.Data;
 using HotelEasy.Services.DTO;
 
-namespace ViaPlan.Web.Controllers
+namespace HotelEasy.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

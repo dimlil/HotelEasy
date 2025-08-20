@@ -27,7 +27,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ViaPlan API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelEasy API", Version = "v1" });
     var jwtSecurityScheme = new OpenApiSecurityScheme
     {
         Scheme = "bearer",
