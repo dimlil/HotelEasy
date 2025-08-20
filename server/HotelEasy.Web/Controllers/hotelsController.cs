@@ -46,6 +46,19 @@ namespace HotelEasy.Web.Controllers
             var result = await _hotelsService.CreateHotelAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHotel(int id)
+        {
+            var result = await _hotelsService.DeleteHotelAsync(id);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+
+            return Ok(result.Data);
+        }
     }
 
 }

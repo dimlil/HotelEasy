@@ -22,10 +22,10 @@ public class HotelsServices
     {
         try
         {
-            var trips = await _context.Hotels
+            var hotel = await _context.Hotels
             .Include(t => t.Owner)
             .ToListAsync();
-            return new ServiceResult<List<HotelDTO>> { Success = true, Data = trips.Select(t => _mapper.Map<HotelDTO>(t)).ToList() };
+            return new ServiceResult<List<HotelDTO>> { Success = true, Data = hotel.Select(t => _mapper.Map<HotelDTO>(t)).ToList() };
         }
         catch (Exception ex)
         {
@@ -70,6 +70,26 @@ public class HotelsServices
         catch (Exception ex)
         {
             return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
+
+    public async Task<ServiceResult<bool>> DeleteHotelAsync(int id)
+    {
+        try
+        {
+            var hotel = await _context.Hotels.FindAsync(id);
+            if (hotel == null)
+            {
+                return new ServiceResult<bool> { Success = false, ErrorMessage = "Hotel not found." };
+            }
+
+            _context.Hotels.Remove(hotel);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<bool> { Success = true, Data = true };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<bool> { Success = false, ErrorMessage = ex.Message };
         }
     }
 }
