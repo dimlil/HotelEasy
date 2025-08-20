@@ -16,17 +16,7 @@ namespace HotelEasy.Services
     {
         private readonly Diplomna21180105Context _context;
         private readonly IConfiguration _configuration;
-        // private readonly string JWTKey;
-        // private readonly string JWTExpireMinutes;
-
-
-        // public AuthServices(string JWTKey, string JWTExpireMinutes)
-        // {
-        //     _context = new Diplomna21180105Context();
-        //     _configuration = new ConfigurationBuilder().Build();
-        //     this.JWTKey = JWTKey;
-        //     this.JWTExpireMinutes = JWTExpireMinutes;
-        // }
+        
         public AuthServices(Diplomna21180105Context context, IConfiguration configuration)
         {
             _context = context;
