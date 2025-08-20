@@ -15,14 +15,14 @@ namespace HotelEasy.Web.Controllers
             _hotelsService = hotelsService;
         }
 
-        [HttpGet("hotels")]
+        [HttpGet()]
         public async Task<IActionResult> GetAllHotels()
         {
             var result = await _hotelsService.GetAllHotelsAsync();
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
-        [HttpPost("hotels")]
+        [HttpPost()]
         public async Task<IActionResult> Login([FromBody] HotelDTO dto)
         {
             var result = await _hotelsService.CreateHotelAsync(dto);
