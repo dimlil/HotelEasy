@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using HotelEasy.Services;
+using HotelEasy.Services.DTO;
 
 namespace HotelEasy.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HotelsController : Controller
+    public class hotelsController : Controller
     {
         private readonly HotelsServices _hotelsService;
 
-        public HotelsController(HotelsServices hotelsService)
+        public hotelsController(HotelsServices hotelsService)
         {
             _hotelsService = hotelsService;
         }
@@ -21,12 +22,7 @@ namespace HotelEasy.Web.Controllers
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
-        // [HttpPost("login")]
-        // public async Task<IActionResult> Login([FromBody] UserLoginDTO dto)
-        // {
-        //     var result = await _authService.LoginAsync(dto);
-        //     return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
-        // }
+      
     }
 
 }
