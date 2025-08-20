@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using HotelEasy.Services.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,6 +79,9 @@ builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 // Register services
 builder.Services.AddScoped<AuthServices>();
+builder.Services.AddScoped<HotelsServices>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
