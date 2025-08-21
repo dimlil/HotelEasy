@@ -64,5 +64,18 @@ namespace HotelEasy.Web.Controllers
 
             return Ok(result.Data);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRoom(int id)
+        {
+            var result = await _roomsService.DeleteRoomAsync(id);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+
+            return Ok(result.Data);
+        }
     }
 }

@@ -114,4 +114,24 @@ public class RoomsServices
             return new ServiceResult<RoomDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<bool>> DeleteRoomAsync(int id)
+    {
+        try
+        {
+            var room = await _context.Rooms.FindAsync(id);
+            if (room == null)
+            {
+                return new ServiceResult<bool> { Success = false, ErrorMessage = "Room not found." };
+            }
+
+            _context.Rooms.Remove(room);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<bool> { Success = true, Data = true };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<bool> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
 }
