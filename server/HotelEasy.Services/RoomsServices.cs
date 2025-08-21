@@ -63,7 +63,7 @@ public class RoomsServices
             var hotel = await _context.Hotels.FindAsync(dto.HotelId);
 
             if (hotel == null)
-                return ServiceResult<RoomDTO>.Failure("Room not found");
+                return ServiceResult<RoomDTO>.Failure("Hotel not found");
 
             room.HotelId = hotel.HotelId;
             room.Hotel = hotel;
@@ -77,6 +77,4 @@ public class RoomsServices
             return new ServiceResult<RoomDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
-
-    
 }
