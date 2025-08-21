@@ -77,4 +77,41 @@ public class RoomsServices
             return new ServiceResult<RoomDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<RoomDTO>> UpdateRoomAsync(int id, CreateRoomDTO dto)
+    {
+        try
+        {
+            var room = await _context.Rooms.FindAsync(id);
+
+            if (room == null)
+            {
+                return new ServiceResult<RoomDTO> { Success = false, ErrorMessage = "Room not found." };
+            }
+
+            var hotel = await _context.Hotels.FindAsync(dto.HotelId);
+
+            if (hotel == null)
+                return ServiceResult<RoomDTO>.Failure("Hotel not found");
+
+            room.HotelId = hotel.HotelId;
+
+            var owner = await _context.Users.FindAsync(hotel.OwnerId);
+            if (owner == null)
+            {
+                return ServiceResult<RoomDTO>.Failure("User not found");
+            }
+
+            hotel.Owner = owner;
+            room.Hotel = hotel;
+
+            _mapper.Map(dto, room);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<RoomDTO> { Success = true, Data = _mapper.Map<RoomDTO>(room) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<RoomDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
 }
