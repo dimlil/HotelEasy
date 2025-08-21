@@ -41,18 +41,18 @@ namespace HotelEasy.Web.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> Login([FromBody] HotelDTO dto)
+        public async Task<IActionResult> CreateHotel([FromBody] HotelDTO dto)
         {
             var result = await _hotelsService.CreateHotelAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTrip(int id, [FromBody] HotelDTO dto)
+        public async Task<IActionResult> UpdateHotel(int id, [FromBody] HotelDTO dto)
         {
             if (dto == null)
             {
-                return BadRequest("Trip data is required.");
+                return BadRequest("Hotel data is required.");
             }
 
             var result = await _hotelsService.UpdateHitelAsync(id, dto);
