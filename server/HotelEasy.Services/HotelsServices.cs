@@ -76,6 +76,35 @@ public class HotelsServices
         }
     }
 
+    public async Task<ServiceResult<HotelDTO>> UpdateHitelAsync(int id, HotelDTO dto)
+    {
+        try
+        {
+            var hotel = await _context.Hotels.FindAsync(id);
+
+            if (hotel == null)
+            {
+                return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = "Hotel not found." };
+            }
+
+            var owner = await _context.Users.FindAsync(dto.OwnerId);
+            if (owner == null)
+            {
+                return ServiceResult<HotelDTO>.Failure("User not found");
+            }
+
+            hotel.Owner = owner;
+
+            _mapper.Map(dto, hotel);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<HotelDTO> { Success = true, Data = _mapper.Map<HotelDTO>(hotel) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
+
     public async Task<ServiceResult<bool>> DeleteHotelAsync(int id)
     {
         try

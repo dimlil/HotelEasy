@@ -47,6 +47,24 @@ namespace HotelEasy.Web.Controllers
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTrip(int id, [FromBody] HotelDTO dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Trip data is required.");
+            }
+
+            var result = await _hotelsService.UpdateHitelAsync(id, dto);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+
+            return Ok(result.Data);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
