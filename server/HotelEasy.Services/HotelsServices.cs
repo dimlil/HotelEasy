@@ -59,9 +59,12 @@ public class HotelsServices
         try
         {
             var hotel = _mapper.Map<Hotel>(dto);
+            var owner = await _context.Users.FindAsync(dto.OwnerId);
 
-            if (await _context.Users.Where(u => u.UserId == dto.OwnerId).FirstOrDefaultAsync() == null)
+            if (owner == null)
                 return ServiceResult<HotelDTO>.Failure("User not found");
+
+            hotel.Owner = owner;
 
             await _context.Hotels.AddAsync(hotel);
             await _context.SaveChangesAsync();
