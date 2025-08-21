@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using HotelEasy.Services;
+using HotelEasy.Services.DTO;
 
 namespace HotelEasy.Web.Controllers
 {
@@ -37,6 +38,13 @@ namespace HotelEasy.Web.Controllers
             }
 
             return Ok(result.Data);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> Login([FromBody] CreateRoomDTO dto)
+        {
+            var result = await _roomsService.CreateRoomAsync(dto);
+            return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
     }
 }
