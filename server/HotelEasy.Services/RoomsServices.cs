@@ -32,4 +32,26 @@ public class RoomsServices
             return new ServiceResult<List<RoomDTO>> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<RoomDetailDTO>> GetRoomByIdAsync(int id)
+    {
+        try
+        {
+            var room = await _context.Rooms
+                .Include(t => t.Hotel)
+                .Include(t => t.Reservations)
+                .FirstOrDefaultAsync(t => t.RoomId == id);
+
+            if (room == null)
+            {
+                return new ServiceResult<RoomDetailDTO> { Success = false, ErrorMessage = "Hotel not found." };
+            }
+
+            return new ServiceResult<RoomDetailDTO> { Success = true, Data = _mapper.Map<RoomDetailDTO>(room) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<RoomDetailDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
 }
