@@ -80,6 +80,7 @@ builder.Logging.SetMinimumLevel(LogLevel.Debug);
 // Register services
 builder.Services.AddScoped<AuthServices>();
 builder.Services.AddScoped<HotelsServices>();
+builder.Services.AddScoped<RoomsServices>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

@@ -8,8 +8,9 @@ namespace HotelEasy.Services.Mapping
     {
        public MappingProfile()
         {
-            CreateMap<Hotel, HotelDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<Hotel, HotelDTO>().ReverseMap();
+            CreateMap<Room, RoomDTO>().ReverseMap();
         }
     }
 }
