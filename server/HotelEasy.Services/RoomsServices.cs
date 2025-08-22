@@ -68,13 +68,6 @@ public class RoomsServices
         try
         {
             var room = _mapper.Map<Room>(dto);
-            var hotel = await _context.Hotels.FindAsync(dto.HotelId);
-
-            if (hotel == null)
-                return ServiceResult<RoomDTO>.Failure("Hotel not found");
-
-            room.HotelId = hotel.HotelId;
-            room.Hotel = hotel;
 
             await _context.Rooms.AddAsync(room);
             await _context.SaveChangesAsync();
