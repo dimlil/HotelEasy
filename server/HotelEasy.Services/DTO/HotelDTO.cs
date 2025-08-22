@@ -22,4 +22,10 @@ namespace HotelEasy.Services.DTO
         public string? Location { get; set; }
     }
 
+    public class HotelShortDTO
+    {
+        public string Name { get; set; } = null!;
+
+        public string? Location { get; set; }
+    }
 }

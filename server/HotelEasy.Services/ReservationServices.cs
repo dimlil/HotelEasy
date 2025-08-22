@@ -22,9 +22,13 @@ public class ReservationServices
     {
         try
         {
-            var rooms = await _context.Reservations
+            var reservation = await _context.Reservations
+            .Include(t => t.Room)
+                .ThenInclude(room => room.Hotel)
+            .Include(t => t.User)
             .ToListAsync();
-            return new ServiceResult<List<ReservationDTO>> { Success = true, Data = rooms.Select(t => _mapper.Map<ReservationDTO>(t)).ToList() };
+
+            return new ServiceResult<List<ReservationDTO>> { Success = true, Data = reservation.Select(t => _mapper.Map<ReservationDTO>(t)).ToList() };
         }
         catch (Exception ex)
         {

@@ -51,5 +51,22 @@ namespace HotelEasy.Services.DTO
 
         public ICollection<ReservationDTO> Reservations { get; set; } = new List<ReservationDTO>();
     }
+
+     public class RoomInReservationDTO
+    {
+        public int RoomId { get; set; }
+
+        public string RoomNumber { get; set; } = null!;
+
+        public int Capacity { get; set; }
+
+        public decimal Price { get; set; }
+
+        public string RoomType { get; set; } = null!;
+
+        public bool IsAvailable { get; set; }
+
+        public HotelShortDTO Hotel { get; set; } = null!;
+    }
 }
 
