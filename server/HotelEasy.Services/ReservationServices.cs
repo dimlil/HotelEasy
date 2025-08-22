@@ -74,4 +74,25 @@ public class ReservationServices
             return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<ReservationDTO>> UpdateReservationAsync(int id, CreateReservationDTO dto)
+    {
+        try
+        {
+            var reservation = await _context.Reservations.FindAsync(id);
+
+            if (reservation == null)
+            {
+                return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = "Reservation not found." };
+            }
+            
+            _mapper.Map(dto, reservation);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<ReservationDTO> { Success = true, Data = _mapper.Map<ReservationDTO>(reservation) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
 }

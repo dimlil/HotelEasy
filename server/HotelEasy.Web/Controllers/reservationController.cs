@@ -47,5 +47,23 @@ namespace HotelEasy.Web.Controllers
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateReservation(int id, [FromBody] CreateReservationDTO dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Reservation data is required.");
+            }
+
+            var result = await _reservationService.UpdateReservationAsync(id, dto);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+
+            return Ok(result.Data);
+        }
+
     }
 }
