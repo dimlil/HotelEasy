@@ -64,7 +64,10 @@ public class HotelsServices
             if (owner == null)
                 return ServiceResult<CreateHotelDTO>.Failure("User not found");
 
-            hotel.Owner = owner;
+            if (owner.Role != "Owner")
+            {
+                return ServiceResult<CreateHotelDTO>.Failure("User is not an owner");
+            }
 
             await _context.Hotels.AddAsync(hotel);
             await _context.SaveChangesAsync();
