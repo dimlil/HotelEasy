@@ -21,5 +21,24 @@ namespace HotelEasy.Web.Controllers
             var result = await _reservationService.GetAllReservationAsync();
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRoom(int id)
+        {
+            var result = await _reservationService.GetReservationByIdAsync(id);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+
+            if (result.Data == null)
+            {
+                return NotFound("Reservation not found.");
+            }
+
+            return Ok(result.Data);
+        }
+
     }
 }

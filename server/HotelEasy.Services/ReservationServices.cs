@@ -35,4 +35,27 @@ public class ReservationServices
             return new ServiceResult<List<ReservationDTO>> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<ReservationDTO>> GetReservationByIdAsync(int id)
+    {
+        try
+        {
+            var reservation = await _context.Reservations
+                .Include(t => t.Room)
+                    .ThenInclude(room => room.Hotel)
+                .Include(t => t.User)
+                .FirstOrDefaultAsync(t => t.RoomId == id);
+
+            if (reservation == null)
+            {
+                return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = "Reservation not found." };
+            }
+
+            return new ServiceResult<ReservationDTO> { Success = true, Data = _mapper.Map<ReservationDTO>(reservation) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
 }
