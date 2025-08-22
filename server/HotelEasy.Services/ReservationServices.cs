@@ -58,4 +58,20 @@ public class ReservationServices
             return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<ReservationDTO>> CreateReservationAsync(CreateReservationDTO dto)
+    {
+        try
+        {
+            var reservation = _mapper.Map<Reservation>(dto);
+            
+            await _context.Reservations.AddAsync(reservation);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<ReservationDTO> { Success = true, Data = _mapper.Map<ReservationDTO>(reservation) };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
 }

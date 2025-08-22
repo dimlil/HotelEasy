@@ -16,14 +16,14 @@ namespace HotelEasy.Web.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetAllRooms()
+        public async Task<IActionResult> GetAllReservation()
         {
             var result = await _reservationService.GetAllReservationAsync();
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRoom(int id)
+        public async Task<IActionResult> GetReservation(int id)
         {
             var result = await _reservationService.GetReservationByIdAsync(id);
 
@@ -38,6 +38,13 @@ namespace HotelEasy.Web.Controllers
             }
 
             return Ok(result.Data);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> CreateReservation([FromBody] CreateReservationDTO dto)
+        {
+            var result = await _reservationService.CreateReservationAsync(dto);
+            return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
     }
