@@ -85,7 +85,7 @@ public class ReservationServices
             {
                 return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = "Reservation not found." };
             }
-            
+
             _mapper.Map(dto, reservation);
             await _context.SaveChangesAsync();
             return new ServiceResult<ReservationDTO> { Success = true, Data = _mapper.Map<ReservationDTO>(reservation) };
@@ -93,6 +93,26 @@ public class ReservationServices
         catch (Exception ex)
         {
             return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
+        }
+    }
+
+      public async Task<ServiceResult<bool>> DeleteReservationAsync(int id)
+    {
+        try
+        {
+            var reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null)
+            {
+                return new ServiceResult<bool> { Success = false, ErrorMessage = "Reservation not found." };
+            }
+
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
+            return new ServiceResult<bool> { Success = true, Data = true };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<bool> { Success = false, ErrorMessage = ex.Message };
         }
     }
 }
