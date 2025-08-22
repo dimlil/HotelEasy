@@ -44,7 +44,7 @@ public class RoomsServices
 
             if (room == null)
             {
-                return new ServiceResult<RoomDetailDTO> { Success = false, ErrorMessage = "Hotel not found." };
+                return new ServiceResult<RoomDetailDTO> { Success = false, ErrorMessage = "Room not found." };
             }
 
             var owner = await _context.Users.FindAsync(room.Hotel.OwnerId);
