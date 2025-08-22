@@ -64,7 +64,7 @@ public class ReservationServices
         try
         {
             var reservation = _mapper.Map<Reservation>(dto);
-            
+
             await _context.Reservations.AddAsync(reservation);
             await _context.SaveChangesAsync();
             return new ServiceResult<ReservationDTO> { Success = true, Data = _mapper.Map<ReservationDTO>(reservation) };
