@@ -79,7 +79,7 @@ public class HotelsServices
         }
     }
 
-    public async Task<ServiceResult<HotelDTO>> UpdateHitelAsync(int id, HotelDTO dto)
+    public async Task<ServiceResult<HotelDTO>> UpdateHitelAsync(int id, CreateHotelDTO dto)
     {
         try
         {
@@ -89,14 +89,6 @@ public class HotelsServices
             {
                 return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = "Hotel not found." };
             }
-
-            var owner = await _context.Users.FindAsync(dto.OwnerId);
-            if (owner == null)
-            {
-                return ServiceResult<HotelDTO>.Failure("User not found");
-            }
-
-            hotel.Owner = owner;
 
             _mapper.Map(dto, hotel);
             await _context.SaveChangesAsync();

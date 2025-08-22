@@ -48,7 +48,7 @@ namespace HotelEasy.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateHotel(int id, [FromBody] HotelDTO dto)
+        public async Task<IActionResult> UpdateHotel(int id, [FromBody] CreateHotelDTO dto)
         {
             if (dto == null)
             {
