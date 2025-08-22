@@ -10,6 +10,7 @@ namespace HotelEasy.Services.Mapping
         {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Hotel, HotelDTO>().ReverseMap();
+            CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
             CreateMap<Room, RoomDTO>().ReverseMap();
             CreateMap<Room, RoomDetailDTO>().ReverseMap();
             CreateMap<Room, CreateRoomDTO>().ReverseMap();

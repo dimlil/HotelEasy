@@ -12,4 +12,14 @@ namespace HotelEasy.Services.DTO
 
         public UserDTO Owner { get; set; } = null!;
     }
+
+    public class CreateHotelDTO
+    {
+        public int OwnerId { get; set; }
+
+        public string Name { get; set; } = null!;
+
+        public string? Location { get; set; }
+    }
+
 }

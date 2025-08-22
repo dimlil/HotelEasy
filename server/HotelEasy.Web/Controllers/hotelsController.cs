@@ -41,7 +41,7 @@ namespace HotelEasy.Web.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> CreateHotel([FromBody] HotelDTO dto)
+        public async Task<IActionResult> CreateHotel([FromBody] CreateHotelDTO dto)
         {
             var result = await _hotelsService.CreateHotelAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
