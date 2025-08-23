@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HotelEasy.Services.Mapping;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
 DotEnv.Load();
 
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
-var JWTKey = Environment.GetEnvironmentVariable("JWTKey") 
+var JWTKey = Environment.GetEnvironmentVariable("JWTKey")
              ?? throw new InvalidOperationException("JWTKey env is missing!");
-var JWTIssuer = Environment.GetEnvironmentVariable("JWTIssuer") 
+var JWTIssuer = Environment.GetEnvironmentVariable("JWTIssuer")
              ?? throw new InvalidOperationException("JWTIssuer env is missing!");
-var JWTAudience = Environment.GetEnvironmentVariable("JWTAudience") 
+var JWTAudience = Environment.GetEnvironmentVariable("JWTAudience")
              ?? throw new InvalidOperationException("JWTAudience env is missing!");
 
 builder.Services.AddDbContext<Diplomna21180105Context>(options =>
@@ -76,12 +77,19 @@ builder.Services.AddAuthentication(options =>
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
+var cloudinary = new Cloudinary(new Account(
+    Environment.GetEnvironmentVariable("CloudName"),
+    Environment.GetEnvironmentVariable("ApiKey"),
+    Environment.GetEnvironmentVariable("ApiSecret")
+));
+builder.Services.AddSingleton(cloudinary);
 
 // Register services
 builder.Services.AddScoped<AuthServices>();
 builder.Services.AddScoped<HotelsServices>();
 builder.Services.AddScoped<RoomsServices>();
 builder.Services.AddScoped<ReservationServices>();
+builder.Services.AddScoped<CloudinaryImageService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

@@ -27,6 +27,9 @@ services:
       - JWTIssuer=${JWTIssuer}
       - JWTAudience=${JWTAudience}
       - JWTExpireMinutes=${JWTExpireMinutes}
+      - CloudName=${CloudName}
+      - ApiKey=${ApiKey}
+      - ApiSecret=${ApiSecret}
     ports:
       - "5276:5276" 
     depends_on:

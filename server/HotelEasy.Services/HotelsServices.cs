@@ -12,10 +12,13 @@ public class HotelsServices
     private readonly Diplomna21180105Context _context;
     private readonly IMapper _mapper;
 
-    public HotelsServices(Diplomna21180105Context context, IMapper mapper)
+    private readonly CloudinaryImageService _imageService;
+
+    public HotelsServices(Diplomna21180105Context context, IMapper mapper, CloudinaryImageService imageService)
     {
         _context = context;
         _mapper = mapper;
+        _imageService = imageService;
     }
 
     public async Task<ServiceResult<List<HotelDTO>>> GetAllHotelsAsync()
@@ -68,6 +71,17 @@ public class HotelsServices
             {
                 return ServiceResult<CreateHotelDTO>.Failure("User is not an owner");
             }
+
+            if (dto.ImageFiles != null && dto.ImageFiles.Any())
+            {
+                var uploadResult = await _imageService.UploadManyAsync(dto.ImageFiles, "hotels");
+
+                if (!uploadResult.Success)
+                    return ServiceResult<CreateHotelDTO>.Failure(uploadResult.ErrorMessage!);
+
+                // hotel.Images = uploadResult.Data; 
+            }
+
 
             await _context.Hotels.AddAsync(hotel);
             await _context.SaveChangesAsync();

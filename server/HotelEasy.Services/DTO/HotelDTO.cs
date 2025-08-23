@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace HotelEasy.Services.DTO
 {
     public class HotelDTO
@@ -20,6 +22,8 @@ namespace HotelEasy.Services.DTO
         public string Name { get; set; } = null!;
 
         public string? Location { get; set; }
+
+        public List<IFormFile>? ImageFiles { get; set; }
     }
 
     public class HotelShortDTO
