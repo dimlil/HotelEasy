@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HotelEasy.Entities;
+﻿namespace HotelEasy.Entities;
 
 public partial class Reservation
 {
@@ -15,7 +12,7 @@ public partial class Reservation
 
     public DateOnly CheckOutDate { get; set; }
 
-    public DateTime? CreatedAt21180105 { get; set; }
+    public DateTime CreatedAt21180105 { get; set; }
 
     public virtual Room Room { get; set; } = null!;
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HotelEasy.Entities;
+﻿namespace HotelEasy.Entities;
 
 public partial class Room
 {
@@ -19,9 +16,11 @@ public partial class Room
 
     public bool IsAvailable { get; set; }
 
-    public DateTime? CreatedAt21180105 { get; set; }
+    public DateTime CreatedAt21180105 { get; set; }
 
     public virtual Hotel Hotel { get; set; } = null!;
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+    public virtual ICollection<RoomImage> RoomImages { get; set; } = new List<RoomImage>();
 }

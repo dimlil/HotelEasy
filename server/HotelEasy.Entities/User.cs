@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HotelEasy.Entities;
+﻿namespace HotelEasy.Entities;
 
 public partial class User
 {
@@ -13,9 +10,11 @@ public partial class User
 
     public string Role { get; set; } = null!;
 
-    public DateTime? CreatedAt21180105 { get; set; }
+    public DateTime CreatedAt21180105 { get; set; }
 
     public virtual ICollection<Hotel> Hotels { get; set; } = new List<Hotel>();
+
+    public virtual ICollection<Log21180105> Log21180105s { get; set; } = new List<Log21180105>();
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 }

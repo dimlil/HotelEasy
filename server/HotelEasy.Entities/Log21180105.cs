@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HotelEasy.Entities;
+﻿namespace HotelEasy.Entities;
 
 public partial class Log21180105
 {
@@ -12,4 +9,8 @@ public partial class Log21180105
     public string? OperationType { get; set; }
 
     public DateTime? OperationDateTime { get; set; }
+
+    public int? UserId { get; set; }
+
+    public virtual User? User { get; set; }
 }
