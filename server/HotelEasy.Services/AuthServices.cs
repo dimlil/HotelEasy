@@ -23,15 +23,15 @@ namespace HotelEasy.Services
             _configuration = configuration;
         }
 
-        public async Task<ServiceResult<string>> RegisterUserAsync(UserRegisterDTO registerDto)
+        public async Task<ServiceResult<string>> RegisterUserAsync(UserCredentialsDTO registerDto)
         {
             if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
-                return ServiceResult<string>.Failure("Username already exists");
+                return ServiceResult<string>.Failure("Email already exists");
 
             var user = new User
             {
                 Email = registerDto.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.PasswordHash),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
                 Role = "User"
             };
 
@@ -42,7 +42,7 @@ namespace HotelEasy.Services
             return ServiceResult<string>.SuccessResult(token);
         }
 
-        public async Task<ServiceResult<string>> LoginAsync(UserLoginDTO UserLoginDTO)
+        public async Task<ServiceResult<string>> LoginAsync(UserCredentialsDTO UserLoginDTO)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == UserLoginDTO.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(UserLoginDTO.Password, user.PasswordHash))
