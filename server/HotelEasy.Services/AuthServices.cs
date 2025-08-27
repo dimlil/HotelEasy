@@ -46,7 +46,7 @@ namespace HotelEasy.Services
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == UserLoginDTO.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(UserLoginDTO.Password, user.PasswordHash))
-                return ServiceResult<string>.Failure("Invalid username or password");
+                return ServiceResult<string>.Failure("Invalid Email or password");
 
             var token = GenerateJwtToken(user);
             return ServiceResult<string>.SuccessResult(token);
