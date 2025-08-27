@@ -1,0 +1,19 @@
+import axios from "axios"
+export const loginUser = async (formData) => {
+    if (formData.email === '' || formData.password === '') {
+        return "All fields must be filled"
+    }
+
+    try {
+        const response = await axios.post('http://localhost:5276/api/auth/login', {
+            email: formData.email,
+            password: formData.password
+        }, { withCredentials: true });
+
+        return response
+    } catch (error) {
+        if (error) {
+            return error.massege
+        }
+    }
+}
