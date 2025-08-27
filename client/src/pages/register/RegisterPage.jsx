@@ -13,14 +13,16 @@ export default function RegisterPage() {
         ],
         buttonText: 'Регистрация',
         onSubmit: async (formData) => {
-            const result = await registerUser(formData);
+            try {
+                const result = await registerUser(formData);
 
-            if (result.status === 200 || result.status === 201) {
-                localStorage.setItem("user", result.data);
-                navigate('/');
-            }
-            else {
-                console.log(result);
+                if (result.status === 200 || result.status === 201) {
+                    localStorage.setItem("user", result.data);
+                    navigate('/');
+                }
+            } catch (error) {
+                navigate('/register');
+                console.log("Registration failed:", error);
             }
         },
     };
