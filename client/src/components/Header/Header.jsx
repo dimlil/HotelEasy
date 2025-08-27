@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
+import logo from '../../assets/logo.png'
 
 export default function Header() {
   return (
     <header>
       <div className={styles.headerWrapper}>
         <Link to="/">
-          <img src='' alt="logo" />
+          <img src={logo} alt="logo" />
         </Link>
 
 
