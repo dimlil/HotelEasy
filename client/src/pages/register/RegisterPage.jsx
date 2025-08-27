@@ -8,7 +8,7 @@ export default function RegisterPage() {
     const materialsFormConfig = {
         formHeader: 'Регистрация',
         fields: [
-            { name: 'username', label: 'Име' },
+            { name: 'email', label: 'Имейл' },
             { name: 'password', label: 'Парола', type: "password" }
         ],
         buttonText: 'Регистрация',

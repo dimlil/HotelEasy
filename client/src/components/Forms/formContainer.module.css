@@ -6,6 +6,9 @@
     gap: 1rem;
     padding: 1rem 10px;
     border-radius: 10px;
+    background-color: #B4CDED;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
 
     h2 {
         text-align: center;
@@ -31,5 +34,6 @@
         padding: 0.5rem;
         border: none;
         margin: 10px 0 5px;
+        background-color: #f48c06;
     }
 }
