@@ -24,6 +24,17 @@ var JWTAudience = Environment.GetEnvironmentVariable("JWTAudience")
 builder.Services.AddDbContext<Diplomna21180105Context>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins(Environment.GetEnvironmentVariable("CLIENT_URL"))
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -94,6 +105,8 @@ builder.Services.AddScoped<CloudinaryImageService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigins");
 
 if (app.Environment.IsDevelopment())
 {

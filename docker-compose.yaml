@@ -30,6 +30,7 @@ services:
       - CloudName=${CloudName}
       - ApiKey=${ApiKey}
       - ApiSecret=${ApiSecret}
+      - CLIENT_URL=${CLIENT_URL}
     ports:
       - "5276:5276" 
     depends_on:
