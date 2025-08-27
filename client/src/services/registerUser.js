@@ -5,8 +5,8 @@ export const registerUser = async (formData) => {
     }
 
     try {
-        const response = await axios.post('http://localhost:5276/register', {
-            username: formData.username,
+        const response = await axios.post('http://localhost:5276/api/auth/register', {
+            email: formData.username,
             password: formData.password
         }, { withCredentials: true });
 
