@@ -16,7 +16,7 @@ export default function RegisterPage() {
             const result = await registerUser(formData);
 
             if (result.status === 200 || result.status === 201) {
-                localStorage.setItem("user", formData.password)
+                localStorage.setItem("user", result.data);
                 navigate('/');
             }
             else {
