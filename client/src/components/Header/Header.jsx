@@ -6,8 +6,6 @@ import logo from '../../assets/logo.png'
 
 export default function Header() {
   const { user } = useContext(AuthContext);
-  console.log(user);
-  
 
   return (
     <header>
