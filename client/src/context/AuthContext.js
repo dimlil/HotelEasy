@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ще се извиква при всяка смяна на route
   useEffect(() => {
     loadUserFromToken();
   }, [location]);
