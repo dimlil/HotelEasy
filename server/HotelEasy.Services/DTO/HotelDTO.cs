@@ -14,6 +14,8 @@ namespace HotelEasy.Services.DTO
         public DateTime? CreatedAt21180105 { get; set; }
 
         public UserDTO Owner { get; set; } = null!;
+
+        public ICollection<HotelImageDTO>? ImageFiles { get; set; }
     }
 
     public class CreateHotelDTO
@@ -32,5 +34,14 @@ namespace HotelEasy.Services.DTO
         public string Name { get; set; } = null!;
 
         public string? Location { get; set; }
+    }
+
+    public class HotelImageDTO
+    {
+        public int Id { get; set; }
+        public string Url { get; set; } = null!;
+        public int HotelId { get; set; }
+
+        public HotelDTO Hotel { get; set; } = null!;
     }
 }

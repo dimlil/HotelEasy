@@ -79,7 +79,9 @@ public class HotelsServices
                 if (!uploadResult.Success)
                     return ServiceResult<CreateHotelDTO>.Failure(uploadResult.ErrorMessage!);
 
-                // hotel.Images = uploadResult.Data; 
+                hotel.HotelImages = uploadResult.Data
+                    .Select(url => new HotelImage { ImageUrl = url })
+                    .ToList();
             }
 
 
