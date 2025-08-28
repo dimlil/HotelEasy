@@ -5,6 +5,7 @@ import Header from './components/Header/Header.jsx'
 import HomePage from './pages/home/HomePage.jsx'
 import RegisterPage from './pages/register/RegisterPage.jsx'
 import LoginPage from './pages/login/LoginPage.jsx'
+import HotelsPage from './pages/hotels/HotelsPage.jsx'
 
 export default function Navigation() {
     return (
@@ -14,6 +15,7 @@ export default function Navigation() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/hotels" element={<HotelsPage />} />
             </Routes>
         </>
     )

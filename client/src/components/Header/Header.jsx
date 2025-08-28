@@ -17,7 +17,7 @@ export default function Header() {
         <nav>
           {user ? <>
             {user.role === "User" && <>
-              <Link to="/">Хотели</Link>
+              <Link to="/hotels">Хотели</Link>
             </>}
           </> : <>
             <Link to="/login">Вход</Link>

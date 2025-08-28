@@ -1,0 +1,13 @@
+.boxesWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: 992px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
