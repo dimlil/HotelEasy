@@ -6,6 +6,8 @@ import logo from '../../assets/logo.png'
 
 export default function Header() {
   const { user } = useContext(AuthContext);
+  console.log(user);
+  
 
   return (
     <header>
@@ -16,9 +18,18 @@ export default function Header() {
 
         <nav>
           {user ? <>
-            {user.role === "User" && <>
-              <Link to="/hotels">Хотели</Link>
-            </>}
+            {
+              user.role === "User" &&
+              <>
+                <Link to="/hotels">Хотели</Link>
+              </>
+            }
+            {
+              user.role === "Owner" &&
+              <>
+                <Link to="/hotels/create">Добави хотел</Link>
+              </>
+            }
           </> : <>
             <Link to="/login">Вход</Link>
             <Link to="/register">Регистрация</Link>

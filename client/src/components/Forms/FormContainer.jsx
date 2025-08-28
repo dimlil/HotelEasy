@@ -13,10 +13,17 @@ const FormContainer = ({
     }, []);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.type === "file") {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.files,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
     const handleSubmit = (e) => {
@@ -34,7 +41,7 @@ const FormContainer = ({
                         id={field.name}
                         name={field.name}
                         type={field.type || "text"}
-                        value={formData[field.name] || ""}
+                        {...(field.type !== "file" && { value: formData[field.name] || "" })}
                         onChange={handleChange}
                     />
                 </div>
