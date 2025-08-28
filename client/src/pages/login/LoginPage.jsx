@@ -17,7 +17,7 @@ export default function LoginPage() {
                 const result = await loginUser(formData);
 
                 if (result.status === 200 || result.status === 201) {
-                    localStorage.setItem("user", result.data);
+                    localStorage.setItem("userToken", result.data);
                     navigate('/');
                 }
             } catch (error) {
