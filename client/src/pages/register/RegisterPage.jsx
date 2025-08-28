@@ -5,7 +5,7 @@ import { registerUser } from "../../services/registerUser";
 export default function RegisterPage() {
     let navigate = useNavigate();
 
-    const materialsFormConfig = {
+    const formConfig = {
         formHeader: 'Регистрация',
         fields: [
             { name: 'email', label: 'Имейл' },
@@ -28,10 +28,10 @@ export default function RegisterPage() {
     };
     return (
         <FormContainer
-            formHeader={materialsFormConfig.formHeader}
-            fields={materialsFormConfig.fields}
-            onSubmit={materialsFormConfig.onSubmit}
-            buttonText={materialsFormConfig.buttonText}
+            formHeader={formConfig.formHeader}
+            fields={formConfig.fields}
+            onSubmit={formConfig.onSubmit}
+            buttonText={formConfig.buttonText}
         />
     )
 }

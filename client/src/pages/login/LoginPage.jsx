@@ -5,7 +5,7 @@ import { loginUser } from "../../services/loginUser";
 export default function LoginPage() {
     let navigate = useNavigate();
 
-    const materialsFormConfig = {
+    const formConfig = {
         formHeader: 'Вход',
         fields: [
             { name: 'email', label: 'Имейл' },
@@ -28,10 +28,10 @@ export default function LoginPage() {
     };
     return (
         <FormContainer
-            formHeader={materialsFormConfig.formHeader}
-            fields={materialsFormConfig.fields}
-            onSubmit={materialsFormConfig.onSubmit}
-            buttonText={materialsFormConfig.buttonText}
+            formHeader={formConfig.formHeader}
+            fields={formConfig.fields}
+            onSubmit={formConfig.onSubmit}
+            buttonText={formConfig.buttonText}
         />
     )
 }
