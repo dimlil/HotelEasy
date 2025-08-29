@@ -56,6 +56,11 @@ public partial class Diplomna21180105Context : DbContext
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.OwnerId).HasColumnName("OwnerID");
 
+            entity.HasMany(e => e.HotelImages)
+                        .WithOne(i => i.Hotel)
+                        .HasForeignKey(i => i.HotelId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
             entity.HasOne(d => d.Owner).WithMany(p => p.Hotels)
                 .HasForeignKey(d => d.OwnerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

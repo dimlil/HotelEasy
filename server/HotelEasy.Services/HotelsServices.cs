@@ -27,6 +27,7 @@ public class HotelsServices
         {
             var hotel = await _context.Hotels
             .Include(t => t.Owner)
+            .Include(t => t.HotelImages)
             .ToListAsync();
             return new ServiceResult<List<HotelDTO>> { Success = true, Data = hotel.Select(t => _mapper.Map<HotelDTO>(t)).ToList() };
         }
@@ -42,6 +43,7 @@ public class HotelsServices
         {
             var hotel = await _context.Hotels
                 .Include(t => t.Owner)
+                .Include(t => t.HotelImages)
                 .FirstOrDefaultAsync(t => t.HotelId == id);
 
             if (hotel == null)
@@ -57,7 +59,7 @@ public class HotelsServices
         }
     }
 
-    public async Task<ServiceResult<CreateHotelDTO>> CreateHotelAsync(CreateHotelDTO dto)
+    public async Task<ServiceResult<HotelDTO>> CreateHotelAsync(CreateHotelDTO dto)
     {
         try
         {
@@ -65,11 +67,11 @@ public class HotelsServices
             var owner = await _context.Users.FindAsync(dto.OwnerId);
 
             if (owner == null)
-                return ServiceResult<CreateHotelDTO>.Failure("User not found");
+                return ServiceResult<HotelDTO>.Failure("User not found");
 
             if (owner.Role != "Owner")
             {
-                return ServiceResult<CreateHotelDTO>.Failure("User is not an owner");
+                return ServiceResult<HotelDTO>.Failure("User is not an owner");
             }
 
             if (dto.ImageFiles != null && dto.ImageFiles.Any())
@@ -77,21 +79,26 @@ public class HotelsServices
                 var uploadResult = await _imageService.UploadManyAsync(dto.ImageFiles, "hotels");
 
                 if (!uploadResult.Success)
-                    return ServiceResult<CreateHotelDTO>.Failure(uploadResult.ErrorMessage!);
+                    return ServiceResult<HotelDTO>.Failure(uploadResult.ErrorMessage!);
 
                 hotel.HotelImages = uploadResult.Data
-                    .Select(url => new HotelImage { ImageUrl = url })
+                    .Select(url => new HotelImage { ImageUrl = url, Hotel = hotel })
                     .ToList();
             }
 
 
             await _context.Hotels.AddAsync(hotel);
             await _context.SaveChangesAsync();
-            return new ServiceResult<CreateHotelDTO> { Success = true, Data = _mapper.Map<CreateHotelDTO>(hotel) };
+            // return new ServiceResult<CreateHotelDTO> { Success = true, Data = _mapper.Map<CreateHotelDTO>(hotel) };
+            return new ServiceResult<HotelDTO>
+            {
+                Success = true,
+                Data = _mapper.Map<HotelDTO>(hotel)
+            };
         }
         catch (Exception ex)
         {
-            return new ServiceResult<CreateHotelDTO> { Success = false, ErrorMessage = ex.Message };
+            return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
 

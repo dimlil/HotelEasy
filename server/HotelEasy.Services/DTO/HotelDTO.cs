@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 
 namespace HotelEasy.Services.DTO
@@ -15,7 +16,7 @@ namespace HotelEasy.Services.DTO
 
         public UserDTO Owner { get; set; } = null!;
 
-        public ICollection<HotelImageDTO>? ImageFiles { get; set; }
+        public ICollection<HotelImageDTO>? HotelImages { get; set; }
     }
 
     public class CreateHotelDTO
@@ -41,7 +42,7 @@ namespace HotelEasy.Services.DTO
         public int Id { get; set; }
         public string Url { get; set; } = null!;
         public int HotelId { get; set; }
-
+        [JsonIgnore]
         public HotelDTO Hotel { get; set; } = null!;
     }
 }

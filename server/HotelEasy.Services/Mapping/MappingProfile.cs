@@ -6,7 +6,7 @@ namespace HotelEasy.Services.Mapping
 {
     public class MappingProfile : Profile
     {
-       public MappingProfile()
+        public MappingProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
 
@@ -21,6 +21,12 @@ namespace HotelEasy.Services.Mapping
 
             CreateMap<Reservation, ReservationDTO>().ReverseMap();
             CreateMap<Reservation, CreateReservationDTO>().ReverseMap();
+
+            CreateMap<Hotel, HotelDTO>()
+                .ForMember(dest => dest.HotelImages, opt => opt.MapFrom(src => src.HotelImages));
+            CreateMap<HotelImage, HotelImageDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.HotelImageId))
+                .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.ImageUrl));
         }
     }
 }
