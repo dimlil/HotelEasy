@@ -10,9 +10,14 @@ export default function HotelDetailsPage() {
             setHotel(await getHotelById(id) )
         }
         fetchHotels()
+        
     }, [id])
     return (
         <section>
+            {hotel.hotelImages && hotel.hotelImages.map((x, i) => (
+                <img key={i} src={x.url} alt={`Hotel Image ${i + 1}`} />
+            ))}
+            
             <h2>
                 {hotel.name}
             </h2>
