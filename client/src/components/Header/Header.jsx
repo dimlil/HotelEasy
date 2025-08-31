@@ -7,6 +7,10 @@ import logo from '../../assets/logo.png'
 export default function Header() {
   const { user } = useContext(AuthContext);
 
+  const logoutHandler = () => {
+    localStorage.removeItem("userToken");
+  }
+
   return (
     <header>
       <div className={styles.headerWrapper}>
@@ -28,6 +32,7 @@ export default function Header() {
                 <Link to="/hotels/create">Добави хотел</Link>
               </>
             }
+            <Link to='/' onClick={logoutHandler}>Изход</Link>
           </> : <>
             <Link to="/login">Вход</Link>
             <Link to="/register">Регистрация</Link>
