@@ -4,15 +4,20 @@ import reportWebVitals from './reportWebVitals';
 import Navigation from './Navigation.jsx';
 import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.js';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <AuthProvider>
-        <Navigation />
-      </AuthProvider>
-    </Router>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Router>
+        <AuthProvider>
+          <Navigation />
+        </AuthProvider>
+      </Router>
+    </LocalizationProvider>
   </React.StrictMode>
 );
 
