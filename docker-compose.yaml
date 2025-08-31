@@ -31,6 +31,8 @@ services:
       - ApiKey=${ApiKey}
       - ApiSecret=${ApiSecret}
       - CLIENT_URL=${CLIENT_URL}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
     ports:
       - "5276:5276" 
     depends_on:

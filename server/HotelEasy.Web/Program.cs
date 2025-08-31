@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HotelEasy.Services.Mapping;
 using CloudinaryDotNet;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -88,12 +89,14 @@ builder.Services.AddAuthentication(options =>
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
-var cloudinary = new Cloudinary(new Account(
+var cloudinary = new Cloudinary(new CloudinaryDotNet.Account(
     Environment.GetEnvironmentVariable("CloudName"),
     Environment.GetEnvironmentVariable("ApiKey"),
     Environment.GetEnvironmentVariable("ApiSecret")
 ));
 builder.Services.AddSingleton(cloudinary);
+
+StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
 
 // Register services
 builder.Services.AddScoped<AuthServices>();
@@ -101,6 +104,7 @@ builder.Services.AddScoped<HotelsServices>();
 builder.Services.AddScoped<RoomsServices>();
 builder.Services.AddScoped<ReservationServices>();
 builder.Services.AddScoped<CloudinaryImageService>();
+builder.Services.AddScoped<PaymentsServices>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

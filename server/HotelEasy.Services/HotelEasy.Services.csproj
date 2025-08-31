@@ -11,6 +11,7 @@
     <PackageReference Include="CloudinaryDotNet" Version="1.27.6" />
     <PackageReference Include="dotenv.net" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
+    <PackageReference Include="Stripe.net" Version="48.6.0-beta.1" />
   </ItemGroup>
 
   <PropertyGroup>
