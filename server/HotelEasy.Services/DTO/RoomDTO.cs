@@ -78,3 +78,13 @@ public class RoomImageDTO
     public string Url { get; set; } = null!;
     public int RoomId { get; set; }
 }
+
+public class SearchRoomsDTO
+{
+    public string location { get; set; } = null!;
+
+    public DateTime checkIn { get; set; }
+    public DateTime checkOut { get; set; }
+
+    public int guests { get; set; }
+}

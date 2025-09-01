@@ -8,6 +8,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styles from './searchBar.module.css'
+import { searchRoom } from "../../services/searchRoom";
 
 export default function SearchBar() {
     const [location, setLocation] = useState("");
@@ -15,8 +16,11 @@ export default function SearchBar() {
     const [checkOut, setCheckOut] = useState(null);
     const [guests, setGuests] = useState("");
 
-    const handleSearch = () => {
-        console.log({ location, checkIn, checkOut, guests });
+    const handleSearch = async () => {
+        // console.log({ location, checkIn, checkOut, guests });
+        const result = await searchRoom(location, checkIn, checkOut, guests);
+        console.log(result);
+        
     };
 
     return (

@@ -48,9 +48,9 @@ namespace HotelEasy.Web.Controllers
         }
         
         [HttpPost("search")]
-        public async Task<IActionResult> searchRoom([FromForm] string location, DateOnly checkIn, DateOnly checkOut, int guests)
+        public async Task<IActionResult> searchRoom([FromBody] SearchRoomsDTO dto)
         {
-            var result = await _roomsService.SearchRoomsAsync(location, checkIn, checkOut, guests);
+            var result = await _roomsService.SearchRoomsAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 

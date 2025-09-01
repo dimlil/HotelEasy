@@ -169,11 +169,7 @@ public class RoomsServices
         }
     }
 
-    public async Task<ServiceResult<List<RoomDTO>>> SearchRoomsAsync(
-    string location,
-    DateOnly checkIn,
-    DateOnly checkOut,
-    int guests)
+    public async Task<ServiceResult<List<RoomDTO>>> SearchRoomsAsync(SearchRoomsDTO dto)
     {
         try
         {
@@ -182,10 +178,11 @@ public class RoomsServices
                 .Include(r => r.Reservations)
                 .Include(r => r.RoomImages)
                 .Where(r =>
-                    r.Hotel.Location.Contains(location) &&
-                    r.Capacity >= guests &&
+                    r.Hotel.Location.Contains(dto.location) &&
+                    r.Capacity >= dto.guests &&
                     !r.Reservations.Any(res =>
-                        (checkIn < res.CheckOutDate && checkOut > res.CheckInDate)
+                        DateOnly.FromDateTime(dto.checkIn) < res.CheckOutDate &&
+                        DateOnly.FromDateTime(dto.checkOut) > res.CheckInDate
                     )
                 )
                 .ToListAsync();
