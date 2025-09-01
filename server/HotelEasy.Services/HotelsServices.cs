@@ -37,25 +37,26 @@ public class HotelsServices
         }
     }
 
-    public async Task<ServiceResult<HotelDTO>> GetHotelByIdAsync(int id)
+    public async Task<ServiceResult<HotelDetailsDTO>> GetHotelByIdAsync(int id)
     {
         try
         {
             var hotel = await _context.Hotels
                 .Include(t => t.Owner)
                 .Include(t => t.HotelImages)
+                .Include(t => t.Rooms)
                 .FirstOrDefaultAsync(t => t.HotelId == id);
 
             if (hotel == null)
             {
-                return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = "Hotel not found." };
+                return new ServiceResult<HotelDetailsDTO> { Success = false, ErrorMessage = "Hotel not found." };
             }
 
-            return new ServiceResult<HotelDTO> { Success = true, Data = _mapper.Map<HotelDTO>(hotel) };
+            return new ServiceResult<HotelDetailsDTO> { Success = true, Data = _mapper.Map<HotelDetailsDTO>(hotel) };
         }
         catch (Exception ex)
         {
-            return new ServiceResult<HotelDTO> { Success = false, ErrorMessage = ex.Message };
+            return new ServiceResult<HotelDetailsDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
 
