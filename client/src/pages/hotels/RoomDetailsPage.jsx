@@ -38,7 +38,7 @@ export default function RoomDetailsPage() {
 
     const bookRoomHandler = async () => {
         const result = await bookRoom(user.id, room.roomId, checkIn, checkOut)
-        console.log(result)
+        window.location = result.data
     }
 
     useEffect(() => {
