@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import styles from './HotelsPage.module.css';
 import { AuthContext } from "../../context/AuthContext.js";
 import { getRoomById } from "../../services/getRoomById.js";
+import { bookRoom } from "../../services/bookRoom.js";
 
 export default function RoomDetailsPage() {
     const [room, setRoom] = useState(null);
@@ -10,6 +11,35 @@ export default function RoomDetailsPage() {
     const [error, setError] = useState("");
     const { id } = useParams();
     const { user } = useContext(AuthContext);
+    const searchParams = new URLSearchParams(window.location.search);
+    const checkInParam = searchParams.get('checkIn');
+    const checkOutParam = searchParams.get('checkOut');
+
+    let checkIn = null;
+    let checkOut = null;
+
+    if (checkInParam) {
+        const parsedCheckIn = new Date(checkInParam);
+        if (!isNaN(parsedCheckIn)) {
+            checkIn = parsedCheckIn.toISOString().split("T")[0];
+        } else {
+            console.error("Invalid check-in date format:", checkInParam);
+        }
+    }
+
+    if (checkOutParam) {
+        const parsedCheckOut = new Date(checkOutParam);
+        if (!isNaN(parsedCheckOut)) {
+            checkOut = parsedCheckOut.toISOString().split("T")[0];
+        } else {
+            console.error("Invalid check-out date format:", checkOutParam);
+        }
+    }
+
+    const bookRoomHandler = async () => {
+        const result = await bookRoom(user.id, room.roomId, checkIn, checkOut)
+        console.log(result)
+    }
 
     useEffect(() => {
         const fetchRoom = async () => {
@@ -40,11 +70,11 @@ export default function RoomDetailsPage() {
     }
 
     if (error) {
-        return(
+        return (
             <section>
                 <p>{error}</p>
             </section>
-        ); 
+        );
     }
 
     return (
@@ -62,6 +92,9 @@ export default function RoomDetailsPage() {
             <div>
                 {user && room.owner && user.email === room.owner.email && (
                     <Link to={`/rooms/edit/${room.hotelId}`}>Редактирай</Link>
+                )}
+                {user && (
+                    <button onClick={bookRoomHandler}>Резервирай</button>
                 )}
             </div>
 

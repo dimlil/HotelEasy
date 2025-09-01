@@ -94,7 +94,7 @@ export default function SearchBar() {
                 <Box className={styles.searchResults}>
                     <h2>Резултати от търсенето:</h2>
                     {rooms.map((x,i) => (
-                        <RoomCard key={i} id={x.roomId} name={x.roomNumber} price={x.price} />
+                        <RoomCard key={i} id={x.roomId} name={x.roomNumber} price={x.price} checkIn={checkIn} checkOut={checkOut} />
                     ))}
                 </Box>
             )}
