@@ -254,7 +254,7 @@ GO
 INSERT INTO [21180105].[Users]
     (Email, PasswordHash, Role)
 VALUES
-    ('admin', 'sa', 'Owner'),
+    ('admin', 'sa', '$2a$11$XOjeryauieFqYsGaMXIOAuoEui89wD3jZ556uAjU4rFb8Kc4/4gEO'), -- Password: admin
     ('owner1@example.com', 'hashedpassword1', 'Owner'),
     ('user1@example.com', 'hashedpassword2', 'User');
 
