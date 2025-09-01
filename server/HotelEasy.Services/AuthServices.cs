@@ -62,6 +62,66 @@ namespace HotelEasy.Services
             return new ServiceResult<List<UserDTO>> { Success = true, Data = users.Select(t => _mapper.Map<UserDTO>(t)).ToList() };
         }
 
+        public async Task<ServiceResult<UserDTO>> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(t => t.UserId == id);
+
+                if (user == null)
+                {
+                    return new ServiceResult<UserDTO> { Success = false, ErrorMessage = "User not found." };
+                }
+
+                return new ServiceResult<UserDTO> { Success = true, Data = _mapper.Map<UserDTO>(user) };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult<UserDTO> { Success = false, ErrorMessage = ex.Message };
+            }
+        }
+        public async Task<ServiceResult<UserDTO>> UpdateUserAsync(int id, UserDTO dto)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+
+                if (user == null)
+                {
+                    return new ServiceResult<UserDTO> { Success = false, ErrorMessage = "User not found." };
+                }
+
+                _mapper.Map(dto, user);
+                await _context.SaveChangesAsync();
+                return new ServiceResult<UserDTO> { Success = true, Data = _mapper.Map<UserDTO>(user) };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult<UserDTO> { Success = false, ErrorMessage = ex.Message };
+            }
+        }
+
+        public async Task<ServiceResult<bool>> DeleteUserAsync(int id)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+                if (user == null)
+                {
+                    return new ServiceResult<bool> { Success = false, ErrorMessage = "User not found." };
+                }
+
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return new ServiceResult<bool> { Success = true, Data = true };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult<bool> { Success = false, ErrorMessage = ex.Message };
+            }
+        }
+
         private string GenerateJwtToken(User user)
         {
             DotEnv.Load();
