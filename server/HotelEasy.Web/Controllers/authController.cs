@@ -29,6 +29,14 @@ namespace HotelEasy.Web.Controllers
             var result = await _authService.LoginAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var result = await _authService.GetAllUserAsync();
+            return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
+        }
+
     }
 
 }

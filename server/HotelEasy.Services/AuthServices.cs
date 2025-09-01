@@ -9,6 +9,7 @@ using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using dotenv.net;
+using AutoMapper;
 
 namespace HotelEasy.Services
 {
@@ -16,11 +17,13 @@ namespace HotelEasy.Services
     {
         private readonly Diplomna21180105Context _context;
         private readonly IConfiguration _configuration;
-        
-        public AuthServices(Diplomna21180105Context context, IConfiguration configuration)
+        private readonly IMapper _mapper;
+
+        public AuthServices(Diplomna21180105Context context, IConfiguration configuration, IMapper mapper)
         {
             _context = context;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         public async Task<ServiceResult<string>> RegisterUserAsync(UserCredentialsDTO registerDto)
@@ -37,7 +40,7 @@ namespace HotelEasy.Services
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            
+
             var token = GenerateJwtToken(user);
             return ServiceResult<string>.SuccessResult(token);
         }
@@ -50,6 +53,13 @@ namespace HotelEasy.Services
 
             var token = GenerateJwtToken(user);
             return ServiceResult<string>.SuccessResult(token);
+        }
+
+        public async Task<ServiceResult<List<UserDTO>>> GetAllUserAsync()
+        {
+            var users = await _context.Users
+            .ToListAsync();
+            return new ServiceResult<List<UserDTO>> { Success = true, Data = users.Select(t => _mapper.Map<UserDTO>(t)).ToList() };
         }
 
         private string GenerateJwtToken(User user)
