@@ -11,3 +11,9 @@
     }
 
 }
+
+.hotelDetailsWrapper{
+    border: 2px solid #B4CDED;
+    border-radius: 10px;
+    padding: 1rem;
+}
