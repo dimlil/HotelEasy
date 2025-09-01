@@ -14,7 +14,6 @@ export default function AdminPanelPage() {
         fetchUsers()
     }, [users])
     const deleteUserHandler = async (id) => {
-        // e.target.querySelector('id').value
         deleteUser(id)
         setUsers(await getAllUsers())
     }
@@ -27,7 +26,7 @@ export default function AdminPanelPage() {
                             <h2>Email: {user.email}</h2>
                             <p>Роля: {user.role}</p>
                         </div>
-                        <div>
+                        <div className={styles.buttonsWrapper}>
                             <Link to={`/admin/edit/${user.userID}`}>Редактирай</Link>
                             <button onClick={() => deleteUserHandler(user.userID)} >Изтрий</button>
                         </div>
