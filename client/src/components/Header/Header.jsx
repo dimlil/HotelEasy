@@ -32,6 +32,13 @@ export default function Header() {
                 <Link to="/hotels/create">Добави хотел</Link>
               </>
             }
+            {
+              user.role === "Admin" &&
+              <>
+                <Link to="/admin/panel">Контролен панел</Link>
+                <Link to="/admin/logs">Логове</Link>
+              </>
+            }
             <Link to='/' onClick={logoutHandler}>Изход</Link>
           </> : <>
             <Link to="/login">Вход</Link>
