@@ -2,6 +2,7 @@ namespace HotelEasy.Services.DTO
 {
     public class UserDTO
     {
+        public int UserID { get; set; }
         public string Email { get; set; } = null!;
 
         public string Role { get; set; } = null!;
