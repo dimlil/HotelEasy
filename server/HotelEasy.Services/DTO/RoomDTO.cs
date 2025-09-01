@@ -55,7 +55,7 @@ namespace HotelEasy.Services.DTO
         public ICollection<ReservationDTO> Reservations { get; set; } = new List<ReservationDTO>();
     }
 
-     public class RoomInReservationDTO
+    public class RoomInReservationDTO
     {
         public int RoomId { get; set; }
 

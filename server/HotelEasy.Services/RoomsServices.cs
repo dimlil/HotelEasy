@@ -168,4 +168,36 @@ public class RoomsServices
             return new ServiceResult<bool> { Success = false, ErrorMessage = ex.Message };
         }
     }
+
+    public async Task<ServiceResult<List<RoomDTO>>> SearchRoomsAsync(
+    string location,
+    DateOnly checkIn,
+    DateOnly checkOut,
+    int guests)
+    {
+        try
+        {
+            var rooms = await _context.Rooms
+                .Include(r => r.Hotel)
+                .Include(r => r.Reservations)
+                .Include(r => r.RoomImages)
+                .Where(r =>
+                    r.Hotel.Location.Contains(location) &&
+                    r.Capacity >= guests &&
+                    !r.Reservations.Any(res =>
+                        (checkIn < res.CheckOutDate && checkOut > res.CheckInDate)
+                    )
+                )
+                .ToListAsync();
+
+            var mappedRooms = rooms.Select(r => _mapper.Map<RoomDTO>(r)).ToList();
+
+            return new ServiceResult<List<RoomDTO>> { Success = true, Data = mappedRooms };
+        }
+        catch (Exception ex)
+        {
+            return ServiceResult<List<RoomDTO>>.Failure(ex.Message);
+        }
+    }
+
 }

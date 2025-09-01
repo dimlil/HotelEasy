@@ -46,6 +46,13 @@ namespace HotelEasy.Web.Controllers
             var result = await _roomsService.CreateRoomAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
+        
+        [HttpPost("search")]
+        public async Task<IActionResult> searchRoom([FromForm] string location, DateOnly checkIn, DateOnly checkOut, int guests)
+        {
+            var result = await _roomsService.SearchRoomsAsync(location, checkIn, checkOut, guests);
+            return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRoom(int id, [FromForm] CreateRoomDTO dto)
