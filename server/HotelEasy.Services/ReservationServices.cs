@@ -4,6 +4,7 @@ using HotelEasy.Entities;
 using HotelEasy.Services.Common;
 using HotelEasy.Services.DTO;
 using Microsoft.EntityFrameworkCore;
+using dotenv.net;
 
 namespace HotelEasy.Services;
 
@@ -12,10 +13,13 @@ public class ReservationServices
     private readonly Diplomna21180105Context _context;
     private readonly IMapper _mapper;
 
-    public ReservationServices(Diplomna21180105Context context, IMapper mapper)
+    private readonly PaymentsServices _paymentService;
+
+    public ReservationServices(Diplomna21180105Context context, IMapper mapper, PaymentsServices paymentService)
     {
         _context = context;
         _mapper = mapper;
+        _paymentService = paymentService;
     }
 
     public async Task<ServiceResult<List<ReservationDTO>>> GetAllReservationAsync()
@@ -59,21 +63,45 @@ public class ReservationServices
         }
     }
 
-    public async Task<ServiceResult<ReservationDTO>> CreateReservationAsync(CreateReservationDTO dto)
+    public async Task<ServiceResult<string>> CreateReservationAsync(CreateReservationDTO dto)
     {
         try
         {
-            var reservation = _mapper.Map<Reservation>(dto);
+            var room = await _context.Rooms.FindAsync(dto.RoomId);
+            if (room == null)
+            {
+                return ServiceResult<string>.Failure("Room not found.");
+            }
 
+            var reservation = _mapper.Map<Reservation>(dto);
             await _context.Reservations.AddAsync(reservation);
             await _context.SaveChangesAsync();
-            return new ServiceResult<ReservationDTO> { Success = true, Data = _mapper.Map<ReservationDTO>(reservation) };
+
+            DotEnv.Load();
+            string clientUrl = Environment.GetEnvironmentVariable("CLIENT_URL") ?? "http://localhost:5173";
+            string successUrl = $"{clientUrl}/success?reservationId={reservation.ReservationId}";
+            string cancelUrl = $"{clientUrl}/cancel?reservationId={reservation.ReservationId}";
+
+            var paymentResult = await _paymentService.CreateCheckoutSessionAsync(
+                amount: room.Price,
+                title: $"Reservation for room {room.RoomNumber}",
+                successUrl: successUrl,
+                cancelUrl: cancelUrl
+            );
+
+            if (!paymentResult.Success)
+            {
+                return ServiceResult<string>.Failure(paymentResult.ErrorMessage!);
+            }
+
+            return new ServiceResult<string> { Success = true, Data = paymentResult.Data! };
         }
         catch (Exception ex)
         {
-            return new ServiceResult<ReservationDTO> { Success = false, ErrorMessage = ex.Message };
+            return ServiceResult<string>.Failure(ex.Message);
         }
     }
+
 
     public async Task<ServiceResult<ReservationDTO>> UpdateReservationAsync(int id, CreateReservationDTO dto)
     {
@@ -96,7 +124,7 @@ public class ReservationServices
         }
     }
 
-      public async Task<ServiceResult<bool>> DeleteReservationAsync(int id)
+    public async Task<ServiceResult<bool>> DeleteReservationAsync(int id)
     {
         try
         {
