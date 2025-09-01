@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import styles from './searchBar.module.css'
 
 export default function SearchBar() {
     const [location, setLocation] = useState("");
@@ -19,20 +20,7 @@ export default function SearchBar() {
     };
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                alignItems: "center",
-                bgcolor: "white",
-                borderRadius: "40px",
-                boxShadow: 3,
-                px: 2,
-                py: 1,
-                gap: 1,
-                maxWidth: "900px",
-                mx: "auto",
-            }}
-        >
+        <Box className={styles.searchBarWrapper}>
             <TextField
                 variant="standard"
                 placeholder="Къде отиваш?"
@@ -90,13 +78,7 @@ export default function SearchBar() {
 
             <IconButton
                 onClick={handleSearch}
-                sx={{
-                    bgcolor: "primary.main",
-                    color: "white",
-                    borderRadius: "50%",
-                    ml: 1,
-                    "&:hover": { bgcolor: "primary.dark" },
-                }}
+                className={styles.searchButton}
             >
                 <SearchIcon />
             </IconButton>
