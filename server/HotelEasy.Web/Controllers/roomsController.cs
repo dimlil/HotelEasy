@@ -41,14 +41,14 @@ namespace HotelEasy.Web.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> CreateRoom([FromBody] CreateRoomDTO dto)
+        public async Task<IActionResult> CreateRoom([FromForm] CreateRoomDTO dto)
         {
             var result = await _roomsService.CreateRoomAsync(dto);
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRoom(int id, [FromBody] CreateRoomDTO dto)
+        public async Task<IActionResult> UpdateRoom(int id, [FromForm] CreateRoomDTO dto)
         {
             if (dto == null)
             {

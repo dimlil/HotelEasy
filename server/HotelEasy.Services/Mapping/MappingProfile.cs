@@ -28,6 +28,9 @@ namespace HotelEasy.Services.Mapping
             CreateMap<HotelImage, HotelImageDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.HotelImageId))
                 .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.ImageUrl));
+
+            CreateMap<RoomImage, RoomImageDTO>()
+                .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.ImageUrl));
         }
     }
 }
