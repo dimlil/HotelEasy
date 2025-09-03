@@ -105,6 +105,7 @@ builder.Services.AddScoped<RoomsServices>();
 builder.Services.AddScoped<ReservationServices>();
 builder.Services.AddScoped<CloudinaryImageService>();
 builder.Services.AddScoped<PaymentsServices>();
+builder.Services.AddScoped<LogServices>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
