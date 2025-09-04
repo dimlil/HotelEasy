@@ -72,7 +72,6 @@ public class RoomsServices
     {
         try
         {
-            // Проверяваме дали хотелът съществува
             var hotel = await _context.Hotels.FindAsync(dto.HotelId);
             if (hotel == null)
                 return ServiceResult<RoomDTO>.Failure("Hotel not found");
@@ -80,7 +79,6 @@ public class RoomsServices
             var room = _mapper.Map<Room>(dto);
             room.Hotel = hotel;
 
-            // Качваме снимките, ако има
             if (dto.ImageFiles != null && dto.ImageFiles.Any())
             {
                 var uploadResult = await _imageService.UploadManyAsync(dto.ImageFiles, "rooms");
