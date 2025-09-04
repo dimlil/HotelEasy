@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { getHotelById } from "../../services/getHotelById.js";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from './HotelsPage.module.css';
 import RoomCard from "../../components/Cards/RoomCard.jsx";
 import { AuthContext } from "../../context/AuthContext.js";
+import { deleteHotel } from "../../services/deleteHotel.js";
 
 export default function HotelDetailsPage() {
     const [hotel, setHotel] = useState(null);
@@ -11,6 +12,7 @@ export default function HotelDetailsPage() {
     const [error, setError] = useState("");
     const { id } = useParams();
     const { user } = useContext(AuthContext);
+    let naviate = useNavigate();
 
     useEffect(() => {
         const fetchHotels = async () => {
@@ -32,6 +34,11 @@ export default function HotelDetailsPage() {
         fetchHotels();
     }, [id]);
 
+    const deleteHotelHandler = async (id) => {
+        deleteHotel(id)
+        naviate('/hotels')
+    }
+
     if (loading) {
         return (
             <section>
@@ -41,15 +48,15 @@ export default function HotelDetailsPage() {
     }
 
     if (error) {
-        return(
+        return (
             <section>
                 <p>{error}</p>
             </section>
-        ); 
+        );
     }
 
     return (
-        <section className={styles.hotelDetailsWrapper}>
+        <section className={styles.detailsWrapper}>
             <div className={styles.hotelDetailsHeader}>
                 {hotel.hotelImages?.map((x, i) => (
                     <img key={i} src={x.url} alt={`Hotel Image ${i + 1}`} />
@@ -61,7 +68,10 @@ export default function HotelDetailsPage() {
 
             <div>
                 {user && hotel.owner && user.email === hotel.owner.email && (
-                    <Link to={`/hotels/edit/${hotel.hotelId}`}>Редактирай</Link>
+                    <div className={styles.buttonsWrapper}>
+                        <Link to={`/hotels/edit/${hotel.hotelId}`}>Редактирай</Link>
+                        <button onClick={() => deleteHotelHandler(hotel.hotelId)} >Изтрий</button>
+                    </div>
                 )}
             </div>
 

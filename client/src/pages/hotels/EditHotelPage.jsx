@@ -37,7 +37,9 @@ export default function EditHotelPage() {
     };
 
     if (!hotel) {
-        return <p>Зареждане...</p>; // показва се докато fetch-ваш
+        return <section>
+            <p>Зареждане...</p>
+        </section>
     }
 
     return (

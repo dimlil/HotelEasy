@@ -133,11 +133,24 @@ public class RoomsServices
             {
                 return ServiceResult<RoomDTO>.Failure("User not found");
             }
+            
+            _mapper.Map(dto, room);
+
+            if (dto.ImageFiles != null && dto.ImageFiles.Any())
+            {
+                var uploadResult = await _imageService.UploadManyAsync(dto.ImageFiles, "rooms");
+
+                if (!uploadResult.Success)
+                    return ServiceResult<RoomDTO>.Failure(uploadResult.ErrorMessage!);
+
+                room.RoomImages = uploadResult.Data
+                    .Select(url => new RoomImage { ImageUrl = url, Room = room })
+                    .ToList();
+            }
 
             hotel.Owner = owner;
             room.Hotel = hotel;
 
-            _mapper.Map(dto, room);
             await _context.SaveChangesAsync();
             return new ServiceResult<RoomDTO> { Success = true, Data = _mapper.Map<RoomDTO>(room) };
         }
