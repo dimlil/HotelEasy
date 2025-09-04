@@ -20,5 +20,17 @@ namespace HotelEasy.Web.Controllers
             var result = await _logsService.GetAllLogs();
             return result.Success ? Ok(result.Data) : BadRequest(result.ErrorMessage);
         }
+
+        [HttpGet("export")]
+        public async Task<IActionResult> ExportLogs()
+        {
+            var csvBytes = await _logsService.ExportLogsToCsvAsync();
+
+            return File(
+                csvBytes,
+                "text/csv",
+                "logs.csv"
+            );
+        }
     }
 }
