@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import styles from './adminPages.module.css'
 import { getAllLogs } from "../../services/getAllLogs"
+import DownloadCsvButton from "../../components/DownloadCsvButton/DownloadCsvButton.jsx"
 
 
 export default function LogsPage() {
@@ -10,9 +11,10 @@ export default function LogsPage() {
             setLogs(await getAllLogs())
         }
         fetchUsers()
-    }, [logs])
+    }, [])
     return (
         <section className={styles.adminPanelWrapper}>
+            <DownloadCsvButton />
             {
                 logs?.data?.map(log => (
                     <div className={styles.row} key={log.userID}>
