@@ -90,14 +90,17 @@ export default function RoomDetailsPage() {
             </div>
 
             <div>
-                {user && room.owner && user.email === room.owner.email && (
-                    <Link to={`/rooms/edit/${room.hotelId}`} className={styles.button}>Редактирай</Link>
+                {user && room.hotel.owner && user.email === room.hotel.owner.email && (
+                    <div className={styles.buttonsWrapper}>
+                        <Link to={`/rooms/edit/${room.hotelId}`} className={styles.button}>Редактирай</Link>
+                        <button className={styles.button}>Изтрий</button>
+                    </div>
                 )}
-                {user && (
+                {user && user.role != 'Owner' && (
                     <button onClick={bookRoomHandler}>Резервирай</button>
                 )}
             </div>
 
-        </section>
+        </section >
     );
 }

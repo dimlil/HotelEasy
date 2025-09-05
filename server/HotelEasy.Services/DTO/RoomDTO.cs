@@ -48,7 +48,7 @@ namespace HotelEasy.Services.DTO
 
         public bool IsAvailable { get; set; }
 
-        public HotelDTO Hotel { get; set; } = null!;
+        public HotelDetailsDTO Hotel { get; set; } = null!;
 
         public ICollection<RoomImageDTO>? RoomImages { get; set; }
 
