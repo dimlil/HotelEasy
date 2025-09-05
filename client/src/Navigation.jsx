@@ -13,6 +13,7 @@ import RoomDetailsPage from './pages/hotels/RoomDetailsPage.jsx'
 import SuccessPage from './pages/hotels/SuccessPage.jsx'
 import LogsPage from './pages/admin/LogsPage.jsx'
 import EditHotelPage from './pages/hotels/EditHotelPage.jsx'
+import EditRoomPage from './pages/hotels/EditRoomPage.jsx'
 
 export default function Navigation() {
     return (
@@ -29,6 +30,7 @@ export default function Navigation() {
                 <Route path="/admin/panel" element={<AdminPanelPage />} />
                 <Route path="/admin/logs" element={<LogsPage />} />
                 <Route path="/rooms/:id" element={<RoomDetailsPage />} />
+                <Route path="/rooms/edit/:id" element={<EditRoomPage />} />
                 <Route path="/success" element={<SuccessPage />} />
             </Routes>
         </>
