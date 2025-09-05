@@ -45,6 +45,9 @@
             border-radius: 10px;
             font-size: 16px;
         }
+        .CrateBtn{
+            background-color: #f48c06;
+        }
         button{
             background-color: #f42a06;
             color: #fff;
