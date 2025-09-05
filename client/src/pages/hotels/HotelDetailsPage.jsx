@@ -100,7 +100,7 @@ export default function HotelDetailsPage() {
             <div>
                 {user && hotel.owner && user.email === hotel.owner.email && (
                     <div className={styles.buttonsWrapper}>
-                        <button onClick={() => showFormHandler(hotel.hotelId)} className={styles.CrateBtn}>Добави стая</button>
+                        <button onClick={showFormHandler} className={styles.CrateBtn}>Добави стая</button>
                         <Link to={`/hotels/edit/${hotel.hotelId}`}>Редактирай</Link>
                         <button onClick={() => deleteHotelHandler(hotel.hotelId)}>Изтрий</button>
                     </div>
