@@ -11,7 +11,13 @@ export default function RoomCard(props) {
             <p>
                 Цена: {props.price} лв.
             </p>
-            <Link to={`/rooms/${props.id}?checkIn=${props.checkIn}&checkOut=${props.checkOut}`}>Виж Още</Link>
+            {
+                props.checkIn && props.checkOut ? (
+                    <Link to={`/rooms/${props.id}?checkIn=${props.checkIn}&checkOut=${props.checkOut}`}>Виж Още</Link>
+                ) : (
+                    <Link to={`/rooms/${props.id}`}>Виж Още</Link>
+                )
+            }
         </div>
     )
 }
