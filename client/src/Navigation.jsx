@@ -15,8 +15,13 @@ import LogsPage from './pages/admin/LogsPage.jsx'
 import EditHotelPage from './pages/hotels/EditHotelPage.jsx'
 import EditRoomPage from './pages/hotels/EditRoomPage.jsx'
 import EditUsersPage from './pages/hotels/EditUserPage.jsx'
+import { useContext } from 'react'
+import { AuthContext } from './context/AuthContext.js'
+import ProtectedRoute from './ProtectedRoute.jsx'
 
 export default function Navigation() {
+      const { user } = useContext(AuthContext);
+    
     return (
         <>
             <Header />
@@ -24,15 +29,23 @@ export default function Navigation() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
+
                 <Route path="/hotels" element={<HotelsPage />} />
                 <Route path="/hotels/:id" element={<HotelDetailsPage />} />
-                <Route path="/hotels/edit/:id" element={<EditHotelPage />} />
-                <Route path="/hotels/create" element={<CreateHotel />} />
-                <Route path="/admin/panel" element={<AdminPanelPage />} />
-                <Route path="/admin/logs" element={<LogsPage />} />
-                <Route path="/admin/edit/:id" element={<EditUsersPage />} />
+
+                <Route element={<ProtectedRoute isAllowed={user?.role === "Owner"} />}>
+                    <Route path="/hotels/edit/:id" element={<EditHotelPage />} />
+                    <Route path="/hotels/create" element={<CreateHotel />} />
+                    <Route path="/rooms/edit/:id" element={<EditRoomPage />} />
+                </Route>
+
+                <Route element={<ProtectedRoute isAllowed={user?.role === "Admin"} redirectPath="/" />}>
+                    <Route path="/admin/panel" element={<AdminPanelPage />} />
+                    <Route path="/admin/logs" element={<LogsPage />} />
+                    <Route path="/admin/edit/:id" element={<EditUsersPage />} />
+                </Route>
+
                 <Route path="/rooms/:id" element={<RoomDetailsPage />} />
-                <Route path="/rooms/edit/:id" element={<EditRoomPage />} />
                 <Route path="/success" element={<SuccessPage />} />
             </Routes>
         </>
