@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from './HotelsPage.module.css';
 import { AuthContext } from "../../context/AuthContext.js";
 import { getRoomById } from "../../services/getRoomById.js";
 import { bookRoom } from "../../services/bookRoom.js";
+import { deleteRoom } from "../../services/deleteRoom.js";
 
 export default function RoomDetailsPage() {
     const [room, setRoom] = useState(null);
@@ -14,6 +15,7 @@ export default function RoomDetailsPage() {
     const searchParams = new URLSearchParams(window.location.search);
     const checkInParam = searchParams.get('checkIn');
     const checkOutParam = searchParams.get('checkOut');
+    let navigate = useNavigate();
 
     let checkIn = null;
     let checkOut = null;
@@ -61,6 +63,11 @@ export default function RoomDetailsPage() {
         fetchRoom();
     }, [id]);
 
+    const deleteRoomHandler = async (id) => {
+        deleteRoom(id)
+        navigate('/hotels/' + room.hotel.hotelId)
+    }
+
     if (loading) {
         return (
             <section>
@@ -92,8 +99,8 @@ export default function RoomDetailsPage() {
             <div>
                 {user && room.hotel.owner && user.email === room.hotel.owner.email && (
                     <div className={styles.buttonsWrapper}>
-                        <Link to={`/rooms/edit/${room.hotelId}`} className={styles.button}>Редактирай</Link>
-                        <button className={styles.button}>Изтрий</button>
+                        <Link to={`/rooms/edit/${room.roomId}`} className={styles.button}>Редактирай</Link>
+                        <button className={styles.button} onClick={() => { deleteRoomHandler(room.roomId) }}>Изтрий</button>
                     </div>
                 )}
                 {user && user.role != 'Owner' && (
