@@ -35,7 +35,7 @@ export default function HotelDetailsPage() {
             }
         };
         fetchHotels();
-    }, [id]);
+    }, []);
 
     const deleteHotelHandler = async (id) => {
         deleteHotel(id)
