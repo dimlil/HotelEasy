@@ -7,14 +7,15 @@ import { deleteUser } from "../../services/deleteUsers.js"
 
 export default function AdminPanelPage() {
     const [users, setUsers] = useState([])
+    const fetchUsers = async () => {
+        setUsers(await getAllUsers())
+    }
     useEffect(() => {
-        const fetchUsers = async () => {
-            setUsers(await getAllUsers())
-        }
         fetchUsers()
-    }, [users])
+    }, [])
     const deleteUserHandler = async (id) => {
         deleteUser(id)
+        fetchUsers()
         setUsers(await getAllUsers())
     }
     return (

@@ -56,7 +56,7 @@ namespace HotelEasy.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromForm] UserDTO dto)
+        public async Task<IActionResult> UpdateUser(int id, [FromForm] EditUserDTO dto)
         {
             if (dto == null)
             {

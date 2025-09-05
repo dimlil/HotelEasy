@@ -7,10 +7,16 @@ namespace HotelEasy.Services.DTO
 
         public string Role { get; set; } = null!;
     }
+    public class EditUserDTO
+    {
+        public string Email { get; set; } = null!;
+
+        public string Role { get; set; } = null!;
+    }
     public class UserAdminDTO
     {
         public string Email { get; set; } = null!;
-        
+
         public string Role { get; set; } = null!;
 
         public ICollection<HotelDTO> Hotels { get; set; } = new List<HotelDTO>();
@@ -28,7 +34,7 @@ namespace HotelEasy.Services.DTO
     public class UserCredentialsDTO
     {
         public string Email { get; set; } = null!;
-        
+
         public string Password { get; set; } = null!;
     }
 }

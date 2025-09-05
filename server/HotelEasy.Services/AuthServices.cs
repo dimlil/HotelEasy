@@ -81,7 +81,7 @@ namespace HotelEasy.Services
                 return new ServiceResult<UserDTO> { Success = false, ErrorMessage = ex.Message };
             }
         }
-        public async Task<ServiceResult<UserDTO>> UpdateUserAsync(int id, UserDTO dto)
+        public async Task<ServiceResult<UserDTO>> UpdateUserAsync(int id, EditUserDTO dto)
         {
             try
             {
