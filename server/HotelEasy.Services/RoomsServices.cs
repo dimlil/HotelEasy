@@ -133,7 +133,7 @@ public class RoomsServices
             {
                 return ServiceResult<RoomDTO>.Failure("User not found");
             }
-            
+
             _mapper.Map(dto, room);
 
             if (dto.ImageFiles != null && dto.ImageFiles.Any())
@@ -164,21 +164,33 @@ public class RoomsServices
     {
         try
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms
+                .Include(r => r.Reservations)
+                .Include(r => r.RoomImages)
+                .FirstOrDefaultAsync(r => r.RoomId == id);
+
             if (room == null)
             {
                 return new ServiceResult<bool> { Success = false, ErrorMessage = "Room not found." };
             }
 
+            if (room.Reservations.Any())
+                _context.Reservations.RemoveRange(room.Reservations);
+
+            if (room.RoomImages.Any())
+                _context.RoomImages.RemoveRange(room.RoomImages);
+
             _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
+
             return new ServiceResult<bool> { Success = true, Data = true };
         }
         catch (Exception ex)
         {
-            return new ServiceResult<bool> { Success = false, ErrorMessage = ex.Message };
+            return new ServiceResult<bool> { Success = false, ErrorMessage = ex.InnerException?.Message ?? ex.Message };
         }
     }
+
 
     public async Task<ServiceResult<List<RoomDTO>>> SearchRoomsAsync(SearchRoomsDTO dto)
     {
