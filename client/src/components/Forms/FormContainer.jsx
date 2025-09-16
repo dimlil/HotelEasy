@@ -43,15 +43,38 @@ const FormContainer = ({
       {fields.map((field) => (
         <div key={field.name}>
           <label htmlFor={field.name}>{field.label}</label>
-          <input
-            id={field.name}
-            name={field.name}
-            type={field.type || "text"}
-            {...(field.type !== "file" && {
-              value: formData[field.name] || "",
-            })}
-            onChange={handleChange}
-          />
+          {field.type === "select" ? (
+            <select
+              id={field.name}
+              name={field.name}
+              value={formData[field.name] || ""}
+              onChange={handleChange}
+            >
+              <option value="">-- Избери --</option>
+              {field.options?.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          ) : field.type === "file" ? (
+            <input
+              id={field.name}
+              name={field.name}
+              type="file"
+              accept={field.accept}
+              onChange={handleChange}
+              multiple
+            />
+          ) : (
+            <input
+              id={field.name}
+              name={field.name}
+              type={field.type || "text"}
+              value={formData[field.name] || ""}
+              onChange={handleChange}
+            />
+          )}
         </div>
       ))}
       <button type="submit">{buttonText}</button>
