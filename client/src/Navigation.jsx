@@ -18,6 +18,7 @@ import EditUsersPage from './pages/hotels/EditUserPage.jsx'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext.js'
 import ProtectedRoute from './ProtectedRoute.jsx'
+import MyHotelsPage from './pages/hotels/MyHotelsPage.jsx'
 
 export default function Navigation() {
       const { user } = useContext(AuthContext);
@@ -36,6 +37,7 @@ export default function Navigation() {
                 <Route element={<ProtectedRoute isAllowed={user?.role === "Owner"} />}>
                     <Route path="/hotels/edit/:id" element={<EditHotelPage />} />
                     <Route path="/hotels/create" element={<CreateHotel />} />
+                    <Route path="/hotels/myHotels" element={<MyHotelsPage />} />
                     <Route path="/rooms/edit/:id" element={<EditRoomPage />} />
                 </Route>
 

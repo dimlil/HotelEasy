@@ -29,6 +29,7 @@ export default function Header() {
             {
               user.role === "Owner" &&
               <>
+                <Link to="/hotels/myHotels">Моите хотели</Link>
                 <Link to="/hotels/create">Добави хотел</Link>
               </>
             }
