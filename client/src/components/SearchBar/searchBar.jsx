@@ -97,8 +97,31 @@ export default function SearchBar() {
             {rooms.length > 0 && (
                 <Box className={styles.searchResults}>
                     <h2>Резултати от търсенето:</h2>
-                    {rooms.map((x,i) => (
-                        <RoomCard key={i} id={x.roomId} name={x.roomNumber} price={x.price} checkIn={checkIn} checkOut={checkOut} />
+
+                    <Box className={styles.sortButtons}>
+                        <button onClick={() => setRooms([...rooms].sort((a, b) => a.price - b.price))}>
+                            Цена ↑
+                        </button>
+                        <button onClick={() => setRooms([...rooms].sort((a, b) => b.price - a.price))}>
+                            Цена ↓
+                        </button>
+                        <button onClick={() => setRooms([...rooms].sort((a, b) => a.capacity - b.capacity))}>
+                            Капацитет ↑
+                        </button>
+                        <button onClick={() => setRooms([...rooms].sort((a, b) => b.capacity - a.capacity))}>
+                            Капацитет ↓
+                        </button>
+                    </Box>
+
+                    {rooms.map((x, i) => (
+                        <RoomCard
+                            key={i}
+                            id={x.roomId}
+                            name={x.roomNumber}
+                            price={x.price}
+                            checkIn={checkIn}
+                            checkOut={checkOut}
+                        />
                     ))}
                 </Box>
             )}
