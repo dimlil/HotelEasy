@@ -16,6 +16,12 @@
         gap: 16px;
     }
 
+    .inputField {
+        @media screen and (max-width: 991px) {
+            width: 100%;
+        }
+    }
+
     .searchButton {
         background-color: #B4CDED;
         color: white;
@@ -30,6 +36,19 @@
         @media screen and (min-width: 992px) {
             border-radius: 50%;
             width: 40px;
+        }
+    }
+}
+
+.searchResults {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    div {
+        @media screen and (min-width: 992px) {
+            flex-direction: row;
+            justify-content: space-between;
         }
     }
 }

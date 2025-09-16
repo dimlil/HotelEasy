@@ -35,6 +35,7 @@ export default function SearchBar() {
                     onChange={(e) => setLocation(e.target.value)}
                     InputProps={{ disableUnderline: true }}
                     sx={{ flex: 1 }}
+                    className={styles.inputField}
                 />
 
                 <Divider orientation="vertical" flexItem />
@@ -49,6 +50,7 @@ export default function SearchBar() {
                             InputProps: { disableUnderline: true },
                         },
                     }}
+                    className={styles.inputField}
                 />
 
                 <Divider orientation="vertical" flexItem />
@@ -63,6 +65,7 @@ export default function SearchBar() {
                             InputProps: { disableUnderline: true },
                         },
                     }}
+                    className={styles.inputField}
                 />
 
                 <Divider orientation="vertical" flexItem />
@@ -80,6 +83,7 @@ export default function SearchBar() {
                     }}
                     InputProps={{ disableUnderline: true }}
                     sx={{ width: 80 }}
+                    className={styles.inputField}
                 />
 
 
