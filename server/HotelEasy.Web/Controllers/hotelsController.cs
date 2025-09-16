@@ -39,6 +39,23 @@ namespace HotelEasy.Web.Controllers
 
             return Ok(result.Data);
         }
+        [HttpGet("myHotels/{ownerId}")]
+        public async Task<IActionResult> GetMyHotels(int ownerId)
+        {
+            var result = await _hotelsService.GetMyHotels(ownerId);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+
+            if (result.Data == null || !result.Data.Any())
+            {
+                return NotFound("No hotels found.");
+            }
+
+            return Ok(result.Data);
+        }
 
         [HttpPost()]
         public async Task<IActionResult> CreateHotel([FromForm] CreateHotelDTO dto)

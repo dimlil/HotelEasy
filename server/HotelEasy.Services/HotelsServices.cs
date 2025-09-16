@@ -59,6 +59,41 @@ public class HotelsServices
             return new ServiceResult<HotelDetailsDTO> { Success = false, ErrorMessage = ex.Message };
         }
     }
+    public async Task<ServiceResult<List<HotelDetailsDTO>>> GetMyHotels(int ownerId)
+    {
+        try
+        {
+            var hotels = await _context.Hotels
+                .Include(t => t.Owner)
+                .Include(t => t.HotelImages)
+                .Include(t => t.Rooms)
+                .Where(t => t.OwnerId == ownerId)
+                .ToListAsync();
+
+            if (hotels == null || !hotels.Any())
+            {
+                return new ServiceResult<List<HotelDetailsDTO>>
+                {
+                    Success = false,
+                    ErrorMessage = "No hotels found for this user."
+                };
+            }
+
+            return new ServiceResult<List<HotelDetailsDTO>>
+            {
+                Success = true,
+                Data = _mapper.Map<List<HotelDetailsDTO>>(hotels)
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResult<List<HotelDetailsDTO>>
+            {
+                Success = false,
+                ErrorMessage = ex.Message
+            };
+        }
+    }
 
     public async Task<ServiceResult<HotelDTO>> CreateHotelAsync(CreateHotelDTO dto)
     {
