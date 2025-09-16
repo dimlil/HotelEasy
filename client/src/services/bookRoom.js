@@ -1,8 +1,5 @@
 import axios from "axios"
 export const bookRoom = async (UserId, RoomId, CheckInDate, CheckOutDate) => {
-    // if (!UserId || !RoomId || !CheckInDate || !CheckOutDate) {
-    //     return "All fields must be filled"
-    // }
     try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/reservation`, {
             UserId: Number(UserId), RoomId: Number(RoomId), CheckInDate, CheckOutDate

@@ -1,16 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
 export function decodeUserToken() {
-  // const token = localStorage.getItem("userToken");
-  // if (!token) return null;
-
-  // try {
-  //   const decoded = jwtDecode(token);
-  //   return decoded;
-  // } catch (error) {
-  //   return null;
-  // }
-
   const token = localStorage.getItem("userToken");
   if (!token) {
     return null;

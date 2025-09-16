@@ -21,7 +21,5 @@ namespace HotelEasy.Services.DTO
 
         public DateOnly CheckOutDate { get; set; }
 
-        // public virtual RoomInReservationDTO Room { get; set; } = null!;
-
     }
 }

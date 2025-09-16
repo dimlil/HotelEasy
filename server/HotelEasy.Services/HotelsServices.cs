@@ -125,7 +125,7 @@ public class HotelsServices
 
             await _context.Hotels.AddAsync(hotel);
             await _context.SaveChangesAsync();
-            // return new ServiceResult<CreateHotelDTO> { Success = true, Data = _mapper.Map<CreateHotelDTO>(hotel) };
+            
             return new ServiceResult<HotelDTO>
             {
                 Success = true,
