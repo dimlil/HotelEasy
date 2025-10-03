@@ -17,11 +17,21 @@ export default function SearchBar() {
     const [checkOut, setCheckOut] = useState(null);
     const [guests, setGuests] = useState("");
     const [rooms, setRooms] = useState([])
+    const [noResults, setNoResults] = useState(false);
 
     const handleSearch = async () => {
-        const result = await searchRoom(location, checkIn, checkOut, guests);
-        if (result.data) {
-            setRooms(result.data);
+        if (!location || !checkIn || !checkOut || !guests) {
+           setNoResults('Няма намерени резултати');
+        }
+        else {
+            const result = await searchRoom(location, checkIn, checkOut, guests);
+            if (result.data) {
+                setRooms(result.data);
+                setNoResults(result.data.length === 0);
+            } else {
+                setRooms([]);
+                setNoResults('Грешка при търсене на стаи');
+            }
         }
     };
 
@@ -123,6 +133,11 @@ export default function SearchBar() {
                             checkOut={checkOut}
                         />
                     ))}
+                </Box>
+            )}
+            {noResults && (
+                <Box className={styles.searchResults}>
+                    <h3>{noResults}</h3>
                 </Box>
             )}
         </>

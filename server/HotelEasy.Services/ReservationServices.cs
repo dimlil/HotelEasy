@@ -81,9 +81,9 @@ public class ReservationServices
             string clientUrl = Environment.GetEnvironmentVariable("CLIENT_URL") ?? "http://localhost:5173";
             string successUrl = $"{clientUrl}/success?reservationId={reservation.ReservationId}";
             string cancelUrl = $"{clientUrl}/cancel?reservationId={reservation.ReservationId}";
-
+            int nights = (dto.CheckOutDate.DayNumber - dto.CheckInDate.DayNumber);
             var paymentResult = await _paymentService.CreateCheckoutSessionAsync(
-                amount: room.Price,
+                amount: room.Price * nights,
                 title: $"Reservation for room {room.RoomNumber}",
                 successUrl: successUrl,
                 cancelUrl: cancelUrl
